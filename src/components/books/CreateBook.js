@@ -76,11 +76,14 @@ class CreateBook extends Component {
                     </div>
                     <div className="input-field">
                         <label htmlFor="content">感想・コメント</label>
-                        <textarea id="content" className="materialize-textarea" onChange={this.handleChange}></textarea>
+                        <textarea id="content" class="materialize-textarea"  onChange={this.handleChange}></textarea>
                     </div>
-                    <div >
-                        <Select isMulti options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
-                        <ReactStarsRating onChange={this.handleChangeStar}  isEdit={true} value={this.state.star} />
+                    <div>
+                        <Select isMulti className='tagarea'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
+                        <div className='star'>
+                        <p className='startext'>評価</p>
+                        <ReactStarsRating  onChange={this.handleChangeStar}  isEdit={true} value={this.state.star} />
+                        </div>
                     </div>
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">登録</button>

@@ -38,3 +38,19 @@ textarea.materialize-textarea:focus:not([readonly]) {
 p {
   white-space: pre-wrap;
 }
+h3 {
+  font-size:50px;
+  color:whitesmoke
+}
+.tagarea {
+  font-size:100%;
+  width:50%;
+  float:left;
+}
+.star {
+  text-align:center;
+}
+.startext {
+  color:red;
+  font-size:100%;
+}
