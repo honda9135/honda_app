@@ -18,7 +18,7 @@ body {
   background: url(/img/mario-bg.png) no-repeat;
   background-size: 100%;
   background-position: bottom;
-  background-color: #ade7be;
+  background-color:white;
   min-height: 100%;
 }
 form {
@@ -39,8 +39,9 @@ p {
   white-space: pre-wrap;
 }
 h3 {
-  font-size:50px;
-  color:whitesmoke
+  font-size:200%;
+  color:#ff8a80;
+  text-align: center;
 }
 .tagarea {
   font-size:100%;
@@ -51,6 +52,32 @@ h3 {
   text-align:center;
 }
 .startext {
-  color:red;
   font-size:100%;
+}
+.dashbord_img {
+  width:100%;
+  height:100%;
+  margin: 0 auto;
+}
+.card-image {
+  width:200px;
+  height:200px
+}
+.card-content {
+  width:100%;
+  height:100%
+}
+.myprofile {
+  margin:5rem 0 1rem 0;
+}
+.myimg {
+  margin-left:0px;
+  height: 100%;
+  vertical-align:middle;
+}
+.myimg-Name {
+  font-size: 25px;
+}
+.myprofile-card{
+  box-shadow: none;
 }

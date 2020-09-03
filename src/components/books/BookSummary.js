@@ -9,7 +9,7 @@ const BookSummary = ({book}) => {
             <div class="col">
                 <div class="card horizontal" >
                     <div class="card-image">
-                        <img src={book.imgUrl} alt="アイコン" />
+                        <img class='dashbord_img' src={book.imgUrl} alt="アイコン" />
                     </div>
                     <div class='card-stacked'>
                         <div class="card-content">
@@ -19,9 +19,6 @@ const BookSummary = ({book}) => {
                             <ReactStarsRating   size={15} isEdit={false} value={book.star} />
                             <p className="grey-text">読了日:{moment(book.createdAt.toDate()).calendar()}</p>
                         </div>    
-                        <div class="card-action">
-                            <a href={book.url}>This is a link</a>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -57,7 +57,7 @@ class CreateBook extends Component {
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-3">読破本の登録</h5>
+                    <h5 className="red-text text-accent-1">読破本の登録</h5>
                     <div className="input-field">
                         <label htmlFor="title">本の名前</label>
                         <input type="text" id="title" onChange={this.handleChange} />
@@ -81,7 +81,7 @@ class CreateBook extends Component {
                     <div>
                         <Select isMulti className='tagarea'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
                         <div className='star'>
-                        <p className='startext'>評価</p>
+                        <p className='startext red-text text-accent-1'>評価</p>
                         <ReactStarsRating  onChange={this.handleChangeStar}  isEdit={true} value={this.state.star} />
                         </div>
                     </div>
