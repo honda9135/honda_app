@@ -12,6 +12,14 @@ export default class Myprofile extends Component {
                         </div>
                         <div class="card-stacked">
                             <p className='myimg-Name'>本田大悟</p>
+                            <p>
+                                <i class="material-icons">email</i>
+                                honda91350629@gmail.com
+                                <br />
+                                <br />
+                                <i class="material-icons">local_phone</i>
+                                070-8300-6062
+                            </p>
                         </div>
                     </div>
                 </li>
