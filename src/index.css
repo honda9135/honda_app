@@ -89,5 +89,20 @@ h3 {
 .profilename {
   font-size: 2rem;
   line-height: 110%;
-  margin: 2.8rem 0 1.68rem 0;
+  margin: 2.8rem 0 1.68rem;
+}
+.card {
+  box-shadow: none;
+  margin: 0rem 0 0rem
+}
+.collapsible-header{
+  padding: 0.5rem  
+}
+.book-content-title {
+  color:orange;
+  margin-block-start: 0rem;
+  font-size:150%;
+}
+.collapsible-body {
+  padding: 0.5rem;
 }

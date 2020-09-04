@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 //import { createProject } from '../../store/actions/projectActions'
-//import { Redirect } from 'react-router-dom'
 
 //book特有
 import Select from 'react-select'
@@ -25,8 +24,12 @@ class CreateBook extends Component {
     }
 
     handleChangeSelect = (e) =>{
+        const newtag = [];
+        for (let i =0;i < e.length; i++){
+            newtag.push(e[i].value);
+        }
         this.setState({
-            tag:e
+            tag:newtag
         })
         console.log(e)
     }
@@ -41,7 +44,7 @@ class CreateBook extends Component {
         e.preventDefault()
         console.log(e)
         this.props.createBook(this.state)
-        //this.props.history.push('/')
+        this.props.history.push('/bookcatalog')
     }
     render() {
         //const { auth } = this.props;

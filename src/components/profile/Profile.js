@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 export default class Profile extends Component {
     componentDidMount() {
         var elem = document.querySelectorAll('.collapsible');
-        var instance = M.Collapsible.init(elem, {
+        M.Collapsible.init(elem, {
             accordion:false
         });
       }
@@ -16,7 +16,7 @@ export default class Profile extends Component {
                 <hr />
                 <ul class="collapsible">
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">face</i>基本情報</div>
+                        <div class="collapsible-header blue lighten-4"><i class="material-icons">face</i>基本情報</div>
                         <div class="collapsible-body">
                         <table border="1" rules="cols">
                                 <tr>
@@ -35,13 +35,41 @@ export default class Profile extends Component {
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">weekend</i>趣味</div>
+                        <div class="collapsible-header blue lighten-4"><i class="material-icons">weekend</i>趣味</div>
                         <div class="collapsible-body">
-                            <span>準備中</span>
+                            <table border="1" rules="cols">
+                                <tr>
+                                    <td>読書</td>
+                                    <td>
+                                        週に1冊以上は読書している気がする。<br />
+                                        ジャンルは問わず様々な本を読む(小説はあまり読まないが、、)。<br />
+                                        住むなら図書館に近い所がいいな。<br />
+                                        読んだ本を記録する
+                                        <NavLink to='/bookCatalog'>
+                                        webアプリ
+                                        </NavLink>
+                                        を作成したので、参考にしてほしい。
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>便利家電</td>
+                                    <td>
+                                        家電オタクで便利な家電を集めるのが好き<br />
+                                        ルンバ・ドラム式洗濯乾燥機など<br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ミニマリズム</td>
+                                    <td>
+                                        必要最低限のもので生きていきたい。<br />
+                                        <a href='https://firebasestorage.googleapis.com/v0/b/home-90900.appspot.com/o/myhome.jpg?alt=media&token=1188705c-9ac4-467e-85ea-d4fc845ac048'>Myhome</a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">hourglass_empty</i>経歴</div>
+                        <div class="collapsible-header blue lighten-4"><i class="material-icons">hourglass_empty</i>経歴</div>
                         <div class="collapsible-body">
                             <table border="1" rules="cols">
                                 <tr>
@@ -80,7 +108,7 @@ export default class Profile extends Component {
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">work</i>スキル</div>
+                        <div class="collapsible-header blue lighten-4"><i class="material-icons">work</i>スキル</div>
                         <div class="collapsible-body">
                         <table border="1" rules="cols">
                                 <tr>
@@ -106,7 +134,7 @@ export default class Profile extends Component {
                                     <td>サイバーセキュリティ<br />(バックエンド)</td>
                                     <td>
                                         約1年間の間、前回会社でサイバーセキュリティの業務に従事した(詳細は<NavLink to='/profile'>こちら</NavLink>)。<br />
-                                        令和元年の10月の情報処理安全確保支援士の試験を受けたが午後２が5点足りずに不合格                
+                                        令和元年10月の情報処理安全確保支援士の試験を受けたが午後２が5点足りずに不合格                
                                     </td>
                                 </tr>
                                 <tr>
