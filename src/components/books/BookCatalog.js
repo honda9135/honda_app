@@ -5,6 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 class BookCatalog extends Component {
     render() {
@@ -16,6 +17,11 @@ class BookCatalog extends Component {
 
         return (
             <div className="bookCatalog container">
+                <p class='profilename red-text text-accent-1'>
+                    読書した本の一覧　
+                    <NavLink to='/bookcreate' className="green-text right"><i class="material-icons">add</i></NavLink>
+                </p>
+                <hr />
                 <div className="row">
                     <div className="book-catalog">
                         { books && books.map(book => {
