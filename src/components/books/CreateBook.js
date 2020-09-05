@@ -50,7 +50,7 @@ class CreateBook extends Component {
     isbn13ToIsbn10(isbn13) {
         console.log(isbn13.length)
         if (isbn13.length ===　13){ 
-            const lastNum = 11-(
+            var lastNum = 11-(
                     isbn13.charAt(3)*10 +
                     isbn13.charAt(4)*9 +
                     isbn13.charAt(5)*8 +
@@ -61,6 +61,9 @@ class CreateBook extends Component {
                     isbn13.charAt(10)*3 +
                     isbn13.charAt(11)*2 
                     )%11;
+            if (lastNum === 11){
+                lastNum = 0;
+            }
             return (isbn13.slice(0,12) + lastNum.toString()).slice(3);   
         }else{
             return isbn13;
