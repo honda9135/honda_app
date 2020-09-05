@@ -6,11 +6,13 @@ import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import M from "materialize-css";
+import BookSearch from './BookSearch'
 
 class BookCatalog extends Component {
     componentDidMount() {
-        var elems= document.querySelectorAll('.modal');
-        M.Modal.init(elems, {});
+        //var elems= document.querySelectorAll('.modal');
+        //M.Modal.init(elems, {});
+        M.AutoInit()
     }
     render() {
         const { books, auth } = this.props;
@@ -25,15 +27,8 @@ class BookCatalog extends Component {
                     読書した本の一覧
                     <NavLink to='/bookcreate' className="green-text right"><i class="material-icons">add</i></NavLink>
                     <a class="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i class="material-icons">search</i></a>
-                    <div id="modal1" class="modal">
-                        <div class="modal-content">
-                        <h4>Modal Header</h4>
-                        <p>A bunch of text</p>
-                        </div>
-                        <div class="modal-footer">
-                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-                        </div>
-                     </div>
+                    <BookSearch />
+                    { this.props.tags.length === 0 ? null :<p class='search_condition'> (検索語句:{this.props.tags.join('or')})</p> }
                 </p>
                 <hr />
                 <div className="row">
@@ -45,27 +40,55 @@ class BookCatalog extends Component {
                         })}
                     </div>
                 </div>
+                <ul class="pagination">
+                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                    <li class="active"><a href="#!">1</a></li>
+                    <li class="waves-effect"><a href="#!">2</a></li>
+                    <li class="waves-effect"><a href="#!">3</a></li>
+                    <li class="waves-effect"><a href="#!">4</a></li>
+                    <li class="waves-effect"><a href="#!">5</a></li>
+                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                </ul>
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log(state);
+const mapStateToProps = (state,props) => {
+    console.log(state.book.tags,'stateチェック');
     return {
         books: state.firestore.ordered.books,
+        tags: state.book.tags,
         auth: state.firebase.auth
     }
 }
 
+
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([
-        { 
-            collection: 'books',
-            //where: ['tag', 'array-contains', '技術'],
-            orderBy:['createdAt','desc'],
-            limit:6
-         }
-    ])
+    firestoreConnect((props) =>{
+        console.log(props.tags,'チェック');
+        var firebaseQueries = [];
+        if (props.tags.length === 0){
+            firebaseQueries = [{
+                collection: 'books',
+                orderBy:['createdAt','desc'],
+                startAt:'4',
+                limit:6
+            }]
+        }else{
+            firebaseQueries = [{
+                collection: 'books',
+                orderBy:['createdAt','desc'],
+                where:[
+                    ['tag','array-contains-any', props.tags],
+                ],
+                //where:[['star','in', [5]],['tag','array-contains-any', ['啓発']]],
+                //where:['tag','array-contains-any', ['啓発']],
+                limit:6
+            }]
+        }
+        return firebaseQueries
+    }
+    )
 )(BookCatalog);

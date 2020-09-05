@@ -11,3 +11,9 @@ export const createBook = (book) => {
         })
     }
 };
+
+export const searchBook = (tags) => {
+    return (dispatch, getState) => {
+        dispatch({type:'SEARCH_BOOK',tags})
+    }
+};

@@ -9,13 +9,15 @@ import { createBook } from '../../store/actions/bookActions'
 
 class CreateBook extends Component {
     state = {
+        isbn:'',
         title: '',
         author:'',
         url:'',
         imgUrl:'',
         tag:[],
         content:'',
-        star:0
+        star:0,
+        errtext:''
     }
     handleChange = (e) => {
         this.setState({
@@ -39,12 +41,55 @@ class CreateBook extends Component {
             star:e
         })
     }
-
     handleSubmit = (e) => {
         e.preventDefault()
         console.log(e)
         this.props.createBook(this.state)
         this.props.history.push('/bookcatalog')
+    }
+    isbn13ToIsbn10(isbn13) {
+        console.log(isbn13.length)
+        if (isbn13.length ===　13){ 
+            const lastNum = 11-(
+                    isbn13.charAt(3)*10 +
+                    isbn13.charAt(4)*9 +
+                    isbn13.charAt(5)*8 +
+                    isbn13.charAt(6)*7 +
+                    isbn13.charAt(7)*6 +
+                    isbn13.charAt(8)*5 +
+                    isbn13.charAt(9)*4 +
+                    isbn13.charAt(10)*3 +
+                    isbn13.charAt(11)*2 
+                    )%11;
+            return (isbn13.slice(0,12) + lastNum.toString()).slice(3);   
+        }else{
+            return isbn13;
+        }
+    }
+
+    handleSubmitIsbn = (e) =>{
+        e.preventDefault()
+        console.log(this.state.isbn)
+        const encodeIsbn = this.state.isbn.split('-').join('')
+        console.log(encodeIsbn,'encode')
+        const openDbUrl = 'https://api.openbd.jp/v1/get?isbn='+encodeIsbn;
+        const isbn10 = this.isbn13ToIsbn10(encodeIsbn);
+        fetch(openDbUrl)
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data[0])
+                this.setState({
+                    title : data[0]['summary']['title'],
+                    author:data[0]['summary']['author'],
+                    url:'https://www.amazon.co.jp/dp/'+isbn10,
+                    imgUrl:data[0]['summary']['cover'],
+                    errtext:''
+                })
+        }).catch((err) => {
+            this.setState({
+                errtext:'ISBNの入力を見直してください。'
+            })
+        });
     }
     render() {
         //const { auth } = this.props;
@@ -59,27 +104,41 @@ class CreateBook extends Component {
           ]
         return (
             <div className="container">
-                <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="red-text text-accent-1">読破本の登録</h5>
+                <form onSubmit={this.handleSubmitIsbn} className="white createBookForm">
+                    <h5 className="red-text text-accent-1">ISBNでの検索</h5>
+                    <div className="input-field">
+                    <label htmlFor="isbn">ISBNの入力(例978-4-87311-565-8)</label>
+                        <input type="text" id="isbn"  onChange={this.handleChange} />
+                        <div className="red-text center">
+                            { this.state.errtext ? <p>{this.state.errtext}</p> : null }
+                        </div>
+                    </div>
+                    <div className="input-field">
+                        <button className="btn pink lighten-1 z-depth-0">検索</button>
+                    </div>
+                </form>
+                <form onSubmit={this.handleSubmit} className="white createBookForm">
+                <h5 className="red-text text-accent-1">読書本の手動登録</h5>
                     <div className="input-field">
                         <label htmlFor="title">本の名前</label>
-                        <input type="text" id="title" onChange={this.handleChange} />
+                        <input type="text" id="title" value={this.state.title} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
                         <label htmlFor="author">著者</label>
-                        <input type="text" id="author" onChange={this.handleChange} />
+                        <input type="text" id="author" value={this.state.author} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
                         <label htmlFor="url">商品のURL</label>
-                        <input type="url" id="url" onChange={this.handleChange} />
+                        <input type="url" id="url" value={this.state.url} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
                         <label htmlFor="imgUrl">イメージのURL</label>
-                        <input type="url" id="imgUrl" onChange={this.handleChange} />
+                        <input type="url" id="imgUrl" value={this.state.imgUrl} onChange={this.handleChange} />
                     </div>
+                    <h5 className="red-text text-accent-1">本の評価</h5>
                     <div className="input-field">
                         <label htmlFor="content">感想・コメント</label>
-                        <textarea id="content" class="materialize-textarea"  onChange={this.handleChange}></textarea>
+                        <textarea id="content" class="materialize-textarea"  value={this.state.content} onChange={this.handleChange}></textarea>
                     </div>
                     <div>
                         <Select isMulti className='tagarea'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />

@@ -9,6 +9,7 @@ import CreateProject from './components/projects/CreateProject';
 import CreateBook from './components/books/CreateBook';
 import BookCatalog from './components/books/BookCatalog';
 import Profile from './components/profile/Profile';
+import Test from './config/test';
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route path='/bookcreate' component={CreateBook} />
             <Route path='/bookcatalog' component={BookCatalog} />
             <Route path='/profile' component={Profile} />
+            <Route path='/test' component={Test} />
           </Switch>
         </div>
       </BrowserRouter>
