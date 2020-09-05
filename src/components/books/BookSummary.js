@@ -29,7 +29,7 @@ export default class BookSummary extends Component {
                                     <p>タグ: {book.tag.join(",")}</p>
                                     <ReactStarsRating   size={15} isEdit={false} value={book.star} />
                                     <p className="grey-text">読了日:{moment(book.createdAt.toDate()).calendar()}</p>
-                                    <a href={book.url}>商品ページへGo(amazon)</a>
+                                    <a href={book.url}　target="_blank"　>商品ページへGo(amazon)</a>
                                 </div>    
                             </div>
                         </div>

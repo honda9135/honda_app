@@ -52,12 +52,12 @@ class CreateBook extends Component {
         if (isbn13.length ===　13){ 
             var lastNum = 11-(
                     isbn13.charAt(3)*10 +
-                    isbn13.charAt(4)*9 +
-                    isbn13.charAt(5)*8 +
-                    isbn13.charAt(6)*7 +
-                    isbn13.charAt(7)*6 +
-                    isbn13.charAt(8)*5 +
-                    isbn13.charAt(9)*4 +
+                    isbn13.charAt(4)*9  +
+                    isbn13.charAt(5)*8  +
+                    isbn13.charAt(6)*7  +
+                    isbn13.charAt(7)*6  +
+                    isbn13.charAt(8)*5  +
+                    isbn13.charAt(9)*4  +
                     isbn13.charAt(10)*3 +
                     isbn13.charAt(11)*2 
                     )%11;
