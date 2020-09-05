@@ -28,7 +28,7 @@ class BookCatalog extends Component {
                     <NavLink to='/bookcreate' className="green-text right"><i class="material-icons">add</i></NavLink>
                     <a class="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i class="material-icons">search</i></a>
                     <BookSearch />
-                    { this.props.tags.length === 0 ? null :<p class='search_condition'> (検索語句:{this.props.tags.join('or')})</p> }
+                    { this.props.tags.length === 0 ? null :<p class='search_condition'> (検索タグ:{this.props.tags.join('or')})</p> }
                 </p>
                 <hr />
                 <div className="row">
