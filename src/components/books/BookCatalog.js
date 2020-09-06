@@ -33,14 +33,13 @@ class BookCatalog extends Component {
     render() {
         const { auth } = this.props;
         var { books } = this.props;
-        if (!books){
-            //console.log(Timestamp.now())
+        if (!books || books.length ===0){
             books = [{
-                author: "McVay,PaulChris／著 大西泰斗／著 マクベイポール／著",
-                title:'一億人の英文法 : すべての日本人に贈る-「話すため」の英文法',
+                author: "サイト管理人　本田",
+                title:'読書を行った本を追加してください。本の登録は右上の+より。',
                 content: 'このような感じで表示されます。本の登録は右上の+よりしてください。',
-                imgUrl:'https://cover.openbd.jp/9784890855278.jpg',
-                url:'https://www.amazon.co.jp/dp/4890855270',
+                imgUrl:'https://firebasestorage.googleapis.com/v0/b/home-90900.appspot.com/o/photo-1562232573-0305012a8818.jpeg?alt=media&token=0995e161-b092-4d6e-9fa1-70ccb4634c20',
+                url:'https://unsplash.com/s/photos/book',
                 tag:['その他'],
                 star:5,
                 createdAt: firebase.firestore.Timestamp.fromDate(new Date())

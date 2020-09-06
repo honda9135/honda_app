@@ -44,7 +44,8 @@ class BookSearch extends Component {
             { value: '啓発', label: '啓発' },
             { value: '経済', label: '経済' },
             { value: '哲学', label: '哲学' },
-            { value: '宗教', label: '宗教' }
+            { value: '宗教', label: '宗教' },
+            {value:'test',label:'test'}
         ]
         return (
             <div id="modal1" class="modal bottom-sheet">
