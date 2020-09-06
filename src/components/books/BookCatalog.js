@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom'
 import M from "materialize-css";
 import BookSearch from './BookSearch'
 import { Pagination } from '@material-ui/lab'
+import firebase from '../../config/fbConfig'
 
 
 class BookCatalog extends Component {
@@ -30,9 +31,23 @@ class BookCatalog extends Component {
     }
 
     render() {
-        const { books, auth } = this.props;
+        const { auth } = this.props;
+        var { books } = this.props;
+        if (!books){
+            //console.log(Timestamp.now())
+            books = [{
+                author: "McVay,PaulChris／著 大西泰斗／著 マクベイポール／著",
+                title:'一億人の英文法 : すべての日本人に贈る-「話すため」の英文法',
+                content: 'このような感じで表示されます。本の登録は右上の+よりしてください。',
+                imgUrl:'https://cover.openbd.jp/9784890855278.jpg',
+                url:'https://www.amazon.co.jp/dp/4890855270',
+                tag:['その他'],
+                star:5,
+                createdAt: firebase.firestore.Timestamp.fromDate(new Date())
+            }]
+        }
         const elementNum = 6
-        
+
         var allpage = 1;
         if(books.length%elementNum ===0){
             //要素がページにピッタリ割り切れた場合
@@ -128,13 +143,6 @@ class BookCatalog extends Component {
                         })}
                     </div>
                 </div>
-                {/* 
-                <form onSubmit={this.handleSubmit}>
-                    <ul class="pagination">
-                        {pagenationJsx}
-                    </ul>
-                </form>
-                */}
                 <Pagination count={allpage} color="secondary" page={this.state.page} onChange={this.handleSubmit} />
             </div>
         )
