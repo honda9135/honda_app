@@ -43,9 +43,14 @@ h3 {
   color:#ff8a80;
   text-align: center;
 }
-.tagarea {
+.tagarea_search {
   font-size:100%;
   width:80%;
+  float:left;
+}
+.tagarea_create {
+  font-size:100%;
+  width:50%;
   float:left;
 }
 .searh-form {
@@ -67,8 +72,8 @@ h3 {
   height:180px;
 }
 .card-content {
-  width:300px;
-  height:250px;
+  width:100%;
+  height:100%;
 }
 .myprofile {
   margin:5rem 0 1rem 0;
@@ -121,4 +126,22 @@ h3 {
   font-size: 60%;
   margin: 0;
   color:green
+}
+.brand-logo{
+  font-size: 150%;
+}
+.nav {
+  font-size: 100%;
+}
+.catalog_summary{
+  width:300px;
+  height:250px;
+}
+.search-text {
+  float: left;
+  font-size:30%;
+}
+nav.MuiPagination-root{
+  background-color: white;
+  box-shadow:none
 }

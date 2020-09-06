@@ -8,7 +8,7 @@ const BookList = ({books}) => {
         <div className="book-list section">
             { books && books.map(book => {
                 return (
-                        <BookSummary book={book} />
+                        <BookSummary custumClass='' book={book} />
                 )
             })}
         </div>

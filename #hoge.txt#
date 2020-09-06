@@ -12,12 +12,11 @@ Reactの基礎からfirebaseのfirestoreについてまでハンズオン形式�
 色々な生き方毎に毎月いくら貯金しなければならないかなど、具体的な教えてくれる（破綻していることが分かるだけだが笑）。
 ロールモデルのない新しい働き方を私達はしなければならない。
 
-                <ul class="pagination">
-                    <li class="disabled"><a href="#!" onClick={this.handleChange} value=0><i class="material-icons">chevron_left</i></a></li>
-                    <li class="active"><a href="#!" onClick={this.handleChange} value=1>1</a></li>
-                    <li class="waves-effect"><a href="#!" onClick={this.handleChange} value=2>2</a></li>
-                    <li class="waves-effect"><a href="#!" onClick={this.handleChange} value=3>3</a></li>
-                    <li class="waves-effect"><a href="#!">4</a></li>
-                    <li class="waves-effect"><a href="#!">5</a></li>
-                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                </ul>
+.card-image {
+  width:200px;
+  height:180px;
+}
+.card-content {
+  width:300px;
+  height:250px;
+}

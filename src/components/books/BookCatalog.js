@@ -7,20 +7,106 @@ import { Redirect } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import M from "materialize-css";
 import BookSearch from './BookSearch'
+import { Pagination } from '@material-ui/lab'
+
 
 class BookCatalog extends Component {
+    constructor(props){
+        super(props);
+        this.state ={
+            page:1
+        }
+    }
     componentDidMount() {
         //var elems= document.querySelectorAll('.modal');
         //M.Modal.init(elems, {});
         M.AutoInit()
     }
+    handleSubmit = (event, value) => {
+        console.log(value)
+        this.setState({
+            page:value
+        })
+    }
+
     render() {
         const { books, auth } = this.props;
-        console.log(books)
+        const elementNum = 6
+        
+        var allpage = 1;
+        if(books.length%elementNum ===0){
+            //要素がページにピッタリ割り切れた場合
+            allpage = Math.floor(books.length/elementNum)   
+        }else{
+            //要素がページにピッタリ割り切れなかった場合
+            allpage = Math.floor(books.length/elementNum) + 1
+        }
+        console.log(allpage,'allpage');
 
+        let  pagenationJsx = [];
+        if (allpage > 0){
+            //'<'の処理
+            if (this.state.page===1){
+                pagenationJsx.push(
+                    <li class="disabled">
+                        <a href="#!" >
+                            <i class="material-icons" >chevron_left</i>
+                        </a>
+                    </li>)
+            }else{
+                pagenationJsx.push(
+                    <li class="waves-effect">
+                        <a href="#!" onClick={this.handleSubmit} value={-1}>
+                            <i class="material-icons" >chevron_left</i>
+                        </a>
+                    </li>)
+            }
+
+            //page番号の処理
+            for (let i = 1;i<=allpage;i++){
+                if (i===this.state.page){
+                    pagenationJsx.push(
+                    <li class="active">
+                        <a href="#!" >
+                            {i}
+                        </a>
+                    </li>)
+                }else{
+                    pagenationJsx.push(
+                        <li class="waves-effect">
+                            <a href="#!" onClick={this.handleSubmit} value={i}>
+                                {i}
+                            </a>
+                            {/*
+                            <input type='submit' id='pageNum' value={i}>{i}</input>
+                            */}
+                            
+                        </li>)
+                }
+            }
+            
+            //'>'の処理
+            if (this.state.page===allpage){
+                pagenationJsx.push(
+                    <li class="disabled">
+                        <a href="#!" >
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>)
+            }else{
+                pagenationJsx.push(
+                    <li class="waves-effect">
+                        <a href="#!" onClick={this.handleSubmit} >
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>)
+            }
+        }
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
 
+        console.log(this.state.page,'test')
+        
         return (
             <div className="bookCatalog container">
                 <p class='profilename red-text text-accent-1'>
@@ -33,22 +119,23 @@ class BookCatalog extends Component {
                 <hr />
                 <div className="row">
                     <div className="book-catalog">
-                        { books && books.map(book => {
+                        { books && books.slice(
+                            (this.state.page-1)*elementNum,this.state.page*elementNum
+                            ).map(book => {
                             return (
-                                    <BookSummary book={book} />
+                                    <BookSummary custumClass='catalog_summary' book={book} />
                             )
                         })}
                     </div>
                 </div>
-                <ul class="pagination">
-                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                    <li class="active"><a href="#!">1</a></li>
-                    <li class="waves-effect"><a href="#!">2</a></li>
-                    <li class="waves-effect"><a href="#!">3</a></li>
-                    <li class="waves-effect"><a href="#!">4</a></li>
-                    <li class="waves-effect"><a href="#!">5</a></li>
-                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                </ul>
+                {/* 
+                <form onSubmit={this.handleSubmit}>
+                    <ul class="pagination">
+                        {pagenationJsx}
+                    </ul>
+                </form>
+                */}
+                <Pagination count={allpage} color="secondary" page={this.state.page} onChange={this.handleSubmit} />
             </div>
         )
     }
@@ -73,8 +160,6 @@ export default compose(
             firebaseQueries = [{
                 collection: 'books',
                 orderBy:['createdAt','desc'],
-                startAt:'4',
-                limit:6
             }]
         }else{
             firebaseQueries = [{
@@ -85,7 +170,6 @@ export default compose(
                 ],
                 //where:[['star','in', [5]],['tag','array-contains-any', ['啓発']]],
                 //where:['tag','array-contains-any', ['啓発']],
-                limit:6
             }]
         }
         return firebaseQueries

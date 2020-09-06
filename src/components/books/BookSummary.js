@@ -11,7 +11,7 @@ export default class BookSummary extends Component {
         });
       }
     render(){
-        const {book} = this.props;
+        const {book,custumClass} = this.props;
         return (
             <div class="row">
                 <div class="col">
@@ -23,7 +23,7 @@ export default class BookSummary extends Component {
                                 <img class='dashbord_img' src={book.imgUrl} alt="アイコン" />
                             </div>
                             <div class='card-stacked'>
-                                <div class="card-content">
+                                <div class={"card-content "+custumClass}>
                                     <span class="card-title">{book.title}</span>
                                     <p>著者: {book.author}</p>
                                     <p>タグ: {book.tag.join(",")}</p>

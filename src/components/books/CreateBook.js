@@ -144,7 +144,7 @@ class CreateBook extends Component {
                         <textarea id="content" class="materialize-textarea"  value={this.state.content} onChange={this.handleChange}></textarea>
                     </div>
                     <div>
-                        <Select isMulti className='tagarea'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
+                        <Select isMulti className='tagarea_create'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
                         <div className='star'>
                         <p className='startext red-text text-accent-1'>評価</p>
                         <ReactStarsRating  onChange={this.handleChangeStar}  isEdit={true} value={this.state.star} />
