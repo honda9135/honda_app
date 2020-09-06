@@ -20,11 +20,6 @@ const bookReducer = (state = initState, action) => {
                 ...state,
                 tags:action.tags
             }
-        case 'INIT_SUM':
-            console.log(action.tags,)
-            return {
-                ...state
-            }
         default: 
             return {
                 ...state,

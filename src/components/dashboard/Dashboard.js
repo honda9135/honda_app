@@ -10,7 +10,6 @@ import Myprofile from '../profile/Myprofile'
 class Dashboard extends Component {
     render() {
         const { books, auth } = this.props;
-        console.log(books)
 
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
@@ -32,7 +31,6 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         books: state.firestore.ordered.books,
         auth: state.firebase.auth

@@ -33,7 +33,6 @@ class CreateBook extends Component {
         this.setState({
             tag:newtag
         })
-        console.log(e)
     }
 
     handleChangeStar = (e) =>{
@@ -43,12 +42,10 @@ class CreateBook extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(e)
         this.props.createBook(this.state)
         this.props.history.push('/bookcatalog')
     }
     isbn13ToIsbn10(isbn13) {
-        console.log(isbn13.length)
         if (isbn13.length ===　13){ 
             var lastNum = 11-(
                     isbn13.charAt(3)*10 +
@@ -72,15 +69,12 @@ class CreateBook extends Component {
 
     handleSubmitIsbn = (e) =>{
         e.preventDefault()
-        console.log(this.state.isbn)
         const encodeIsbn = this.state.isbn.trim().toLowerCase().replace('isbn','').split('-').join('')
-        console.log(encodeIsbn,'encode')
         const openDbUrl = 'https://api.openbd.jp/v1/get?isbn='+encodeIsbn;
         const isbn10 = this.isbn13ToIsbn10(encodeIsbn);
         fetch(openDbUrl)
             .then(response => response.json())
             .then((data) => {
-                console.log(data[0])
                 this.setState({
                     title : data[0]['summary']['title'],
                     author:data[0]['summary']['author'],

@@ -29,13 +29,13 @@ export default class Myprofile extends Component {
                         <NavLink to='/profile' className="secondary-content"><i className="material-icons">send</i></NavLink>
                     </div>
                 </li>
-                <li class="collection-item">
+                <li className="collection-item">
                     <div>
                         学生時代の研究内容
                         <NavLink to='/' className="secondary-content"><i className="material-icons">send</i></NavLink>
                     </div>
                 </li>
-                <li class="collection-item">
+                <li className="collection-item">
                     <div>
                         前会社での仕事
                         <NavLink to='/' className="secondary-content"><i className="material-icons">send</i></NavLink>

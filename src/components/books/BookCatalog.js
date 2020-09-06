@@ -18,7 +18,7 @@ class BookCatalog extends Component {
             page:1
         }
     }
-    UNSAFE_componentDidMount() {
+    componentDidMount() {
         //var elems= document.querySelectorAll('.modal');
         //M.Modal.init(elems, {});
         M.AutoInit()
@@ -55,7 +55,6 @@ class BookCatalog extends Component {
             //要素がページにピッタリ割り切れなかった場合
             allpage = Math.floor(books.length/elementNum) + 1
         }
-        console.log(allpage,'allpage');
 
         let  pagenationJsx = [];
         if (allpage > 0){
@@ -119,8 +118,6 @@ class BookCatalog extends Component {
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
 
-        console.log(this.state.page,'test')
-        
         return (
             <div className="bookCatalog container">
                 <p className='profilename red-text text-accent-1'>
@@ -149,7 +146,6 @@ class BookCatalog extends Component {
 }
 
 const mapStateToProps = (state,props) => {
-    console.log(state.book.tags,'stateチェック');
     return {
         books: state.firestore.ordered.books,
         tags: state.book.tags,
@@ -161,7 +157,6 @@ const mapStateToProps = (state,props) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect((props) =>{
-        console.log(props.tags,'チェック');
         var firebaseQueries = [];
         if (props.tags.length === 0){
             firebaseQueries = [{

@@ -4,11 +4,8 @@ import ReactStarsRating from 'react-awesome-stars-rating';
 import M from "materialize-css";
 
 export default class BookSummary extends Component {
-    UNSAFE_componentDidMount() {
-        var elem = document.querySelectorAll('.collapsible');
-        M.Collapsible.init(elem, {
-            accordion:false
-        });
+    componentDidMount() {
+        M.AutoInit()
       }
     render(){
         const {book,custumClass} = this.props;

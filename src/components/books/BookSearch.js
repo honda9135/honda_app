@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
-//import ReactStarsRating from 'react-awesome-stars-rating';
 import { connect } from 'react-redux'
 import { searchBook } from '../../store/actions/bookActions'
 
@@ -33,7 +32,6 @@ class BookSearch extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(e)
         this.props.searchBook(this.state.tag)
     }
 

@@ -3,7 +3,7 @@ import M from "materialize-css";
 import { NavLink } from 'react-router-dom'
 
 export default class Profile extends Component {
-    UNSAFE_componentDidMount() {
+    componentDidMount() {
         var elem = document.querySelectorAll('.collapsible');
         M.Collapsible.init(elem, {
             accordion:false
