@@ -12,19 +12,20 @@ import firebase from '../../config/fbConfig'
 
 
 class BookCatalog extends Component {
+    
     constructor(props){
         super(props);
         this.state ={
-            page:1
+            page:1 //Paginationの現在のページ番号
         }
     }
+
     componentDidMount() {
-        //var elems= document.querySelectorAll('.modal');
-        //M.Modal.init(elems, {});
+        //Paginationを使用するためMeterializeを初期化
         M.AutoInit()
     }
+
     handleSubmit = (event, value) => {
-        console.log(value)
         this.setState({
             page:value
         })
@@ -32,8 +33,14 @@ class BookCatalog extends Component {
 
     render() {
         const { auth } = this.props;
+        
+        //もしログインしてなかったらsigninにリダイレクト
+        if (!auth.uid) return <Redirect to='/signin' />
+
+        //booksは変更するためvarで宣言
         var { books } = this.props;
         if (!books || books.length ===0){
+            //bookが一つもない場合テストデータとして以下を出力させる。
             books = [{
                 author: "サイト管理人　本田",
                 title:'読書を行った本を追加してください。本の登録は右上の+より。',
@@ -45,78 +52,19 @@ class BookCatalog extends Component {
                 createdAt: firebase.firestore.Timestamp.fromDate(new Date())
             }]
         }
-        const elementNum = 6
 
+        //Paginationの処理の記述
+        //elementNumは1つのページの要素数
+        //allpageは全体のページ数
+        const elementNum = 6
         var allpage = 1;
         if(books.length%elementNum ===0){
             //要素がページにピッタリ割り切れた場合
             allpage = Math.floor(books.length/elementNum)   
         }else{
-            //要素がページにピッタリ割り切れなかった場合
+            //要素がページにピッタリ割り切れなかった場合(割り切れないため分のページがあるため+1)
             allpage = Math.floor(books.length/elementNum) + 1
         }
-
-        let  pagenationJsx = [];
-        if (allpage > 0){
-            //'<'の処理
-            if (this.state.page===1){
-                pagenationJsx.push(
-                    <li class="disabled">
-                        <a href="#!" >
-                            <i class="material-icons" >chevron_left</i>
-                        </a>
-                    </li>)
-            }else{
-                pagenationJsx.push(
-                    <li class="waves-effect">
-                        <a href="#!" onClick={this.handleSubmit} value={-1}>
-                            <i class="material-icons" >chevron_left</i>
-                        </a>
-                    </li>)
-            }
-
-            //page番号の処理
-            for (let i = 1;i<=allpage;i++){
-                if (i===this.state.page){
-                    pagenationJsx.push(
-                    <li class="active">
-                        <a href="#!" >
-                            {i}
-                        </a>
-                    </li>)
-                }else{
-                    pagenationJsx.push(
-                        <li class="waves-effect">
-                            <a href="#!" onClick={this.handleSubmit} value={i}>
-                                {i}
-                            </a>
-                            {/*
-                            <input type='submit' id='pageNum' value={i}>{i}</input>
-                            */}
-                            
-                        </li>)
-                }
-            }
-            
-            //'>'の処理
-            if (this.state.page===allpage){
-                pagenationJsx.push(
-                    <li className="disabled">
-                        <a href="#!" >
-                            <i className="material-icons">chevron_right</i>
-                        </a>
-                    </li>)
-            }else{
-                pagenationJsx.push(
-                    <li className="waves-effect">
-                        <a href="#!" onClick={this.handleSubmit} >
-                            <i className="material-icons">chevron_right</i>
-                        </a>
-                    </li>)
-            }
-        }
-        //もしログインしてなかったらsigninにリダイレクト
-        if (!auth.uid) return <Redirect to='/signin' />
 
         return (
             <div className="bookCatalog container">
@@ -125,11 +73,16 @@ class BookCatalog extends Component {
                     <NavLink to='/bookcreate' className="green-text right"><i className="material-icons">add</i></NavLink>
                     <a className="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i className="material-icons">search</i></a>
                     <BookSearch />
+
+                    {/* 検索の内容を表示させる*/}
                     { this.props.tags.length === 0 ? null :<p className='search_condition'> (検索タグ:{this.props.tags.join('or')})</p> }
+
                 </p>
                 <hr />
                 <div className="row">
                     <div className="book-catalog">
+
+                        {/* 現在のページ番号の要素のBookSummaryを表示させる*/}
                         { books && books.slice(
                             (this.state.page-1)*elementNum,this.state.page*elementNum
                             ).map(book => {
@@ -137,9 +90,12 @@ class BookCatalog extends Component {
                                     <BookSummary custumClass='catalog_summary' book={book} />
                             )
                         })}
+
                     </div>
                 </div>
+                
                 <Pagination count={allpage} color="secondary" page={this.state.page} onChange={this.handleSubmit} />
+
             </div>
         )
     }
@@ -157,23 +113,27 @@ const mapStateToProps = (state,props) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect((props) =>{
+        
+        //firestoreに要求するqueryを作成する
         var firebaseQueries = [];
+
         if (props.tags.length === 0){
+            //条件なしの時
             firebaseQueries = [{
                 collection: 'books',
                 orderBy:['createdAt','desc'],
             }]
         }else{
+            //条件ありの時
             firebaseQueries = [{
                 collection: 'books',
                 orderBy:['createdAt','desc'],
                 where:[
                     ['tag','array-contains-any', props.tags],
                 ],
-                //where:[['star','in', [5]],['tag','array-contains-any', ['啓発']]],
-                //where:['tag','array-contains-any', ['啓発']],
             }]
         }
+
         return firebaseQueries
     }
     )

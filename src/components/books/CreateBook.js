@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-//import { createProject } from '../../store/actions/projectActions'
-
-//book特有
 import Select from 'react-select'
 import ReactStarsRating from 'react-awesome-stars-rating';
 import { createBook } from '../../store/actions/bookActions'
+import { Redirect } from 'react-router-dom';
 
 class CreateBook extends Component {
+    
     state = {
-        isbn:'',
-        title: '',
-        author:'',
-        url:'',
-        imgUrl:'',
-        tag:[],
-        content:'',
-        star:0,
-        errtext:''
+        isbn:   '', //ISBNの値
+        title:  '', //本のタイトル
+        author: '', //本の著者
+        url:    '', //本のURL
+        imgUrl: '', //本の画像のURL
+        tag:    [], //関連するタグ
+        content:'', //本の感想
+        star:   0 , //本の評価
+        errtext:''  //エラー文
     }
+
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -26,6 +26,7 @@ class CreateBook extends Component {
     }
 
     handleChangeSelect = (e) =>{
+        //タグの変化を保存する
         const newtag = [];
         for (let i =0;i < e.length; i++){
             newtag.push(e[i].value);
@@ -36,42 +37,62 @@ class CreateBook extends Component {
     }
 
     handleChangeStar = (e) =>{
+        //評価の保存
         this.setState({
             star:e
         })
     }
+
     handleSubmit = (e) => {
         e.preventDefault()
         this.props.createBook(this.state)
         this.props.history.push('/bookcatalog')
     }
+
     isbn13ToIsbn10(isbn13) {
-        if (isbn13.length ===　13){ 
-            var lastNum = 11-(
-                    isbn13.charAt(3)*10 +
-                    isbn13.charAt(4)*9  +
-                    isbn13.charAt(5)*8  +
-                    isbn13.charAt(6)*7  +
-                    isbn13.charAt(7)*6  +
-                    isbn13.charAt(8)*5  +
-                    isbn13.charAt(9)*4  +
-                    isbn13.charAt(10)*3 +
-                    isbn13.charAt(11)*2 
-                    )%11;
-            if (lastNum === 11){
-                lastNum = 0;
-            }
-            return (isbn13.slice(0,12) + lastNum.toString()).slice(3);   
-        }else{
+        //ISBN13からISBN10へ変換を行う。
+        //amazonはISBN10でしか検索できないから
+        if (isbn13.length !==　13){ 
+            //入力されたものがISBN13ではない場合はそのまま返す。
             return isbn13;
+        }else{
+            //入力されたものがISBN13の場合
+            //以下計算式
+            var lastNum = 11-(
+                isbn13.charAt(3)*10 +
+                isbn13.charAt(4)*9  +
+                isbn13.charAt(5)*8  +
+                isbn13.charAt(6)*7  +
+                isbn13.charAt(7)*6  +
+                isbn13.charAt(8)*5  +
+                isbn13.charAt(9)*4  +
+                isbn13.charAt(10)*3 +
+                isbn13.charAt(11)*2 
+                )%11;
+        if (lastNum === 11){
+            lastNum = 0;
+        }else if(lastNum === 10){
+            lastNum = 'X'
+        }
+        return (isbn13.slice(0,12) + lastNum.toString()).slice(3);   
         }
     }
 
     handleSubmitIsbn = (e) =>{
         e.preventDefault()
+        
+        //入力されたISBNを整形する。
+        //想定('-'が入っていたり、大文字や小文字の'ISBN'が入っていたり)
         const encodeIsbn = this.state.isbn.trim().toLowerCase().replace('isbn','').split('-').join('')
+
+        //openDbUrlに問い合わせを行うURLを作成
         const openDbUrl = 'https://api.openbd.jp/v1/get?isbn='+encodeIsbn;
+
+        //amazon商品ページ用のISBN10を作成
         const isbn10 = this.isbn13ToIsbn10(encodeIsbn);
+
+        //openDbに本の情報を問い合わせる。
+        //とってきた情報をstateに保存
         fetch(openDbUrl)
             .then(response => response.json())
             .then((data) => {
@@ -88,9 +109,13 @@ class CreateBook extends Component {
             })
         });
     }
+
     render() {
-        //const { auth } = this.props;
-        //if (!auth.uid) return <Redirect to='/signin' />
+        const { auth } = this.props;
+        //ログインしているかチェック
+        if (!auth.uid) return <Redirect to='/signin' />
+        
+        //tagの準備
         const options = [
             {value: 'その他', label: 'その他'},
             { value: '技術', label: '技術' },
@@ -99,23 +124,30 @@ class CreateBook extends Component {
             { value: '哲学', label: '哲学' },
             { value: '宗教', label: '宗教' }
           ]
+
         return (
             <div className="container">
+
+                {/*ISBN検索用のフォーム */}
                 <form onSubmit={this.handleSubmitIsbn} className="white createBookForm">
                     <h5 className="red-text text-accent-1"><a href='https://blog.qbist.co.jp/?p=3071' rel="noopener noreferrer" target="_blank">ISBN</a>での検索</h5>
                     <div className="input-field">
-                    <label htmlFor="isbn">ISBNの入力(例978-4-87311-565-8)</label>
+                        <label htmlFor="isbn">ISBNの入力(例978-4-87311-565-8)</label>
                         <input type="text" id="isbn"  onChange={this.handleChange} />
                         <div className="red-text center">
+                            {/*ISBNのエラーを表示 */}
                             { this.state.errtext ? <p>{this.state.errtext}</p> : null }
                         </div>
                     </div>
                     <div className="input-field">
+                        {/*ISBNの検索ボタン*/}
                         <button className="btn pink lighten-1 z-depth-0">検索</button>
                     </div>
                 </form>
+
+                {/*本の情報登録用のフォーム */}
                 <form onSubmit={this.handleSubmit} className="white createBookForm">
-                <h5 className="red-text text-accent-1">読書本の手動登録</h5>
+                    <h5 className="red-text text-accent-1">読書本の手動登録</h5>
                     <div className="input-field">
                         <label htmlFor="title">本の名前</label>
                         <input type="text" id="title" value={this.state.title} onChange={this.handleChange} />

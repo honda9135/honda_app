@@ -10,7 +10,7 @@ import Myprofile from '../profile/Myprofile'
 class Dashboard extends Component {
     render() {
         const { books, auth } = this.props;
-
+        
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
 

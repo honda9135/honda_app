@@ -6,7 +6,10 @@ import { connect } from 'react-redux'
 
 const Navbar = (props) => {
     const {auth,profile} = props;
+    
+    //ログインしてなければSigndOutLinksしていればSignedInLinks
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />
+
     return (
         <nav className="nav-wrapper white initnav">
             <div className="container ">

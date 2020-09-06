@@ -5,20 +5,24 @@ import { Redirect } from 'react-router-dom'
 
 class SignIn extends Component {
     state = {
-        email: '',
+        email: '', 
         password: ''
     }
+
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
     }
+
     handleSubmit = (e) => {
         e.preventDefault()
         this.props.signIn(this.state)
     }
     render() {
         const { authError, auth } = this.props;
+
+        //ログインされていないかのチェック
         if (auth.uid) return <Redirect to='/' />
 
         return (

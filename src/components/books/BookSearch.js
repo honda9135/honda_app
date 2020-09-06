@@ -4,13 +4,15 @@ import { connect } from 'react-redux'
 import { searchBook } from '../../store/actions/bookActions'
 
 class BookSearch extends Component {
+    
     state = {
-        tag:[],
-        star:0
+        tag:[] //検索するタグ  
     }
+
     handleChangeSelect = (e) =>{
         const newtag = [];
         if(e){
+            //選択したtagをリストにする
             for (let i =0;i < e.length; i++){
                 newtag.push(e[i].value);
             }
@@ -18,7 +20,7 @@ class BookSearch extends Component {
                 tag:newtag
             })
         }else{
-            //eがnullの時の処理
+            //eがnullの時はtagを初期化する。
             this.setState({
                 tag:newtag
             })
@@ -26,16 +28,21 @@ class BookSearch extends Component {
     }
 
     handleChangeStar = (e) =>{
+        //評価の星のhandler
         this.setState({
             star:e
         })
     }
+
     handleSubmit = (e) => {
+        //検索の結果をactionクリエイターに飛ばす。
         e.preventDefault()
         this.props.searchBook(this.state.tag)
     }
 
     render(){
+
+        //tagの内容(constructorに任せてもいいかも)
         const options = [
             {value: 'その他', label: 'その他'},
             { value: '技術', label: '技術' },
@@ -45,26 +52,27 @@ class BookSearch extends Component {
             { value: '宗教', label: '宗教' },
             {value:'test',label:'test'}
         ]
+        
         return (
             <div id="modal1" className="modal bottom-sheet">
                 <form onSubmit={console.log(this.state.tag)} className="white searh-form">
-                <div className="modal-content">
-                            <Select isMulti  maxMenuHeight={150} className='tagarea_search'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                </div>
-                <div className="modal-footer white">
-                <p className='orange-text search-text'>
-                ※
-                <a href="https://cloud.google.com/firestore/docs/query-data/queries?hl=ja" rel="noopener noreferrer" target="_blank">
-                firebaseの仕様上    
-                </a>
-                検索結果は10件までしか表示できません(Update予定)
-                </p>
-                <a href="#!" onClick= {this.handleSubmit} className="modal-close waves-effect waves-green btn-flat orange">検索</a>
-                </div>
+                    <div className="modal-content">
+                        <Select isMulti  maxMenuHeight={150} className='tagarea_search'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <div className="modal-footer white">
+                        <p className='orange-text search-text'>
+                            ※
+                            <a href="https://cloud.google.com/firestore/docs/query-data/queries?hl=ja" rel="noopener noreferrer" target="_blank">
+                                firebaseの仕様上    
+                            </a>
+                            検索結果は10件までしか表示できません(Update予定)
+                        </p>
+                        <a href="#!" onClick= {this.handleSubmit} className="modal-close waves-effect waves-green btn-flat orange">検索</a>
+                    </div>
                 </form>
             </div>
         )

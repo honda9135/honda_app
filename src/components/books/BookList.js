@@ -2,7 +2,6 @@ import React from 'react'
 import BookSummary from './BookSummary'
 
 const BookList = ({books}) => {
-    console.log(books)
     return (
         <div className="book-list section">
             { books && books.map((book,index) => {
