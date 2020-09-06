@@ -3,7 +3,7 @@ import M from "materialize-css";
 import { NavLink } from 'react-router-dom'
 
 export default class Profile extends Component {
-    componentDidMount() {
+    UNSAFE_componentDidMount() {
         var elem = document.querySelectorAll('.collapsible');
         M.Collapsible.init(elem, {
             accordion:false
@@ -11,14 +11,15 @@ export default class Profile extends Component {
       }
     render() {
         return(
-            <div class='container'>
-                <p class='profilename red-text text-accent-1'>自己紹介</p>
+            <div className='container'>
+                <p className='profilename red-text text-accent-1'>自己紹介</p>
                 <hr />
-                <ul class="collapsible">
+                <ul className="collapsible">
                     <li>
-                        <div class="collapsible-header blue lighten-4"><i class="material-icons">face</i>基本情報</div>
-                        <div class="collapsible-body">
+                        <div className="collapsible-header blue lighten-4"><i className="material-icons">face</i>基本情報</div>
+                        <div className="collapsible-body">
                         <table border="1" rules="cols">
+                            <tbody>
                                 <tr>
                                     <td>出身地</td>
                                     <td>宮崎県新富町</td>
@@ -31,13 +32,15 @@ export default class Profile extends Component {
                                     <td>血液型・星座</td>
                                     <td>O型・蟹座</td>
                                 </tr>
-                            </table>
+                            </tbody>
+                        </table>
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header blue lighten-4"><i class="material-icons">weekend</i>趣味</div>
-                        <div class="collapsible-body">
+                        <div className="collapsible-header blue lighten-4"><i className="material-icons">weekend</i>趣味</div>
+                        <div className="collapsible-body">
                             <table border="1" rules="cols">
+                            <tbody>
                                 <tr>
                                     <td>読書</td>
                                     <td>
@@ -65,56 +68,64 @@ export default class Profile extends Component {
                                         <a href='https://firebasestorage.googleapis.com/v0/b/home-90900.appspot.com/o/myhome.jpg?alt=media&token=1188705c-9ac4-467e-85ea-d4fc845ac048'>Myhome</a>
                                     </td>
                                 </tr>
+                                </tbody>
                             </table>
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header blue lighten-4"><i class="material-icons">hourglass_empty</i>経歴</div>
-                        <div class="collapsible-body">
+                        <div className="collapsible-header blue lighten-4"><i className="material-icons">hourglass_empty</i>経歴</div>
+                        <div className="collapsible-body">
                             <table border="1" rules="cols">
-                                <tr>
-                                    <th>年月</th>
-                                    <th>学歴・職歴</th>
-                                </tr>
-                                <tr>
-                                    <td>平成25年3月</td>
-                                    <td>宮崎県立妻高等学校　普通科　卒業</td>
-                                </tr>
-                                <tr>
-                                    <td>平成25年4月</td>
-                                    <td>宮崎大学　工学部　電子物理工学科　入学</td>
-                                </tr>
-                                <tr>
-                                    <td>平成29年3月</td>
-                                    <td>宮崎大学　工学部　電子物理工学科　卒業</td>
-                                </tr>
-                                <tr>
-                                    <td>平成29年4月</td>
-                                    <td>宮崎大学　工学研究科　工学専攻　エネルギー系コース　入学</td>
-                                </tr>
-                                <tr>
-                                    <td>平成31年3月</td>
-                                    <td>宮崎大学　工学研究科　工学専攻　エネルギー系コース　卒業</td>
-                                </tr>
-                                <tr>
-                                    <td>平成31年4月</td>
-                                    <td>株式会社富士通九州システムズ　就職</td>
-                                </tr>
-                                <tr>
-                                    <td>令和2年7月</td>
-                                    <td>株式会社富士通九州システムズ　退職</td>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th>年月</th>
+                                        <th>学歴・職歴</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>平成25年3月</td>
+                                        <td>宮崎県立妻高等学校　普通科　卒業</td>
+                                    </tr>
+                                    <tr>
+                                        <td>平成25年4月</td>
+                                        <td>宮崎大学　工学部　電子物理工学科　入学</td>
+                                    </tr>
+                                    <tr>
+                                        <td>平成29年3月</td>
+                                        <td>宮崎大学　工学部　電子物理工学科　卒業</td>
+                                    </tr>
+                                    <tr>
+                                        <td>平成29年4月</td>
+                                        <td>宮崎大学　工学研究科　工学専攻　エネルギー系コース　入学</td>
+                                    </tr>
+                                    <tr>
+                                        <td>平成31年3月</td>
+                                        <td>宮崎大学　工学研究科　工学専攻　エネルギー系コース　卒業</td>
+                                    </tr>
+                                    <tr>
+                                        <td>平成31年4月</td>
+                                        <td>株式会社富士通九州システムズ　就職</td>
+                                    </tr>
+                                    <tr>
+                                        <td>令和2年7月</td>
+                                        <td>株式会社富士通九州システムズ　退職</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header blue lighten-4"><i class="material-icons">work</i>スキル</div>
-                        <div class="collapsible-body">
+                        <div className="collapsible-header blue lighten-4"><i className="material-icons">work</i>スキル</div>
+                        <div className="collapsible-body">
                         <table border="1" rules="cols">
+                            <thead>
                                 <tr>
                                     <th>スキル</th>
                                     <th>歴・コメント</th>
                                 </tr>
+                            </thead>
+                            <tbody>
                                 <tr>
                                     <td>python</td>
                                     <td>
@@ -144,6 +155,7 @@ export default class Profile extends Component {
                                         このサイトもReactとfirebaseを使用してSPAで作成した。<br />
                                     </td>
                                 </tr>
+                            </tbody>
                             </table>
                         </div>
                     </li>

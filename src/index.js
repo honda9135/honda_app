@@ -21,11 +21,11 @@ const store = createStore(rootReducer,
 );
 store.firebaseAuthIsReady.then(() => {
   ReactDOM.render(
-    <React.StrictMode>
+    <React.Fragment>
       <Provider store={store}>
           <App />
       </Provider>
-    </React.StrictMode>,
+      </React.Fragment>,
     document.getElementById('root')
   );
 })

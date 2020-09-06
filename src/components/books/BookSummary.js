@@ -4,7 +4,7 @@ import ReactStarsRating from 'react-awesome-stars-rating';
 import M from "materialize-css";
 
 export default class BookSummary extends Component {
-    componentDidMount() {
+    UNSAFE_componentDidMount() {
         var elem = document.querySelectorAll('.collapsible');
         M.Collapsible.init(elem, {
             accordion:false
@@ -13,18 +13,18 @@ export default class BookSummary extends Component {
     render(){
         const {book,custumClass} = this.props;
         return (
-            <div class="row">
-                <div class="col">
-                    <ul class="collapsible">
+            <div className="row">
+                <div className="col">
+                    <ul className="collapsible">
                         <li>
-                        <div class="collapsible-header">
-                        <div class="card horizontal" >
-                            <div class="card-image">
-                                <img class='dashbord_img' src={book.imgUrl} alt="アイコン" />
+                        <div className="collapsible-header">
+                        <div className="card horizontal" >
+                            <div className="card-image">
+                                <img className='dashbord_img' src={book.imgUrl} alt="アイコン" />
                             </div>
-                            <div class='card-stacked'>
-                                <div class={"card-content "+custumClass}>
-                                    <span class="card-title">{book.title}</span>
+                            <div className='card-stacked'>
+                                <div className={"card-content " + custumClass}>
+                                    <span className="card-title">{book.title}</span>
                                     <p>著者: {book.author}</p>
                                     <p>タグ: {book.tag.join(",")}</p>
                                     <ReactStarsRating   size={15} isEdit={false} value={book.star} />
@@ -34,8 +34,8 @@ export default class BookSummary extends Component {
                             </div>
                         </div>
                         </div>
-                        <div class="collapsible-body">
-                            <p class='book-content-title'>感想・コメント</p>
+                        <div className="collapsible-body">
+                            <p className='book-content-title'>感想・コメント</p>
                             {book.content}
                         </div>
                         </li>

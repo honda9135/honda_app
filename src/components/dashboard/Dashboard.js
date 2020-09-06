@@ -22,7 +22,7 @@ class Dashboard extends Component {
                         <Myprofile />
                     </div>
                     <div className="col s12 m5 offset-m1">
-                        <h3 class='header'>最新の読書情報</h3>
+                        <h3 className='header'>最新の読書情報</h3>
                         <BookList books={books} />
                     </div>
                 </div>

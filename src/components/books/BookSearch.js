@@ -48,24 +48,24 @@ class BookSearch extends Component {
             {value:'test',label:'test'}
         ]
         return (
-            <div id="modal1" class="modal bottom-sheet">
+            <div id="modal1" className="modal bottom-sheet">
                 <form onSubmit={console.log(this.state.tag)} className="white searh-form">
-                <div class="modal-content">
+                <div className="modal-content">
                             <Select isMulti  maxMenuHeight={150} className='tagarea_search'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
                             <br />
                             <br />
                             <br />
                             <br />
                 </div>
-                <div class="modal-footer white">
-                <p class='orange-text search-text'>
+                <div className="modal-footer white">
+                <p className='orange-text search-text'>
                 ※
                 <a href="https://cloud.google.com/firestore/docs/query-data/queries?hl=ja" rel="noopener noreferrer" target="_blank">
                 firebaseの仕様上    
                 </a>
                 検索結果は10件までしか表示できません(Update予定)
                 </p>
-                <a href="#!" onClick= {this.handleSubmit} class="modal-close waves-effect waves-green btn-flat orange">検索</a>
+                <a href="#!" onClick= {this.handleSubmit} className="modal-close waves-effect waves-green btn-flat orange">検索</a>
                 </div>
                 </form>
             </div>

@@ -73,7 +73,7 @@ class CreateBook extends Component {
     handleSubmitIsbn = (e) =>{
         e.preventDefault()
         console.log(this.state.isbn)
-        const encodeIsbn = this.state.isbn.split('-').join('')
+        const encodeIsbn = this.state.isbn.trim().toLowerCase().replace('isbn','').split('-').join('')
         console.log(encodeIsbn,'encode')
         const openDbUrl = 'https://api.openbd.jp/v1/get?isbn='+encodeIsbn;
         const isbn10 = this.isbn13ToIsbn10(encodeIsbn);
@@ -108,7 +108,7 @@ class CreateBook extends Component {
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmitIsbn} className="white createBookForm">
-                    <h5 className="red-text text-accent-1">ISBNでの検索</h5>
+                    <h5 className="red-text text-accent-1"><a href='https://blog.qbist.co.jp/?p=3071' rel="noopener noreferrer" target="_blank">ISBN</a>での検索</h5>
                     <div className="input-field">
                     <label htmlFor="isbn">ISBNの入力(例978-4-87311-565-8)</label>
                         <input type="text" id="isbn"  onChange={this.handleChange} />
@@ -141,7 +141,7 @@ class CreateBook extends Component {
                     <h5 className="red-text text-accent-1">本の評価</h5>
                     <div className="input-field">
                         <label htmlFor="content">感想・コメント</label>
-                        <textarea id="content" class="materialize-textarea"  value={this.state.content} onChange={this.handleChange}></textarea>
+                        <textarea id="content" className="materialize-textarea"  value={this.state.content} onChange={this.handleChange}></textarea>
                     </div>
                     <div>
                         <Select isMulti className='tagarea_create'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />

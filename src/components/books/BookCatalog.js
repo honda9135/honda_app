@@ -18,7 +18,7 @@ class BookCatalog extends Component {
             page:1
         }
     }
-    componentDidMount() {
+    UNSAFE_componentDidMount() {
         //var elems= document.querySelectorAll('.modal');
         //M.Modal.init(elems, {});
         M.AutoInit()
@@ -102,16 +102,16 @@ class BookCatalog extends Component {
             //'>'の処理
             if (this.state.page===allpage){
                 pagenationJsx.push(
-                    <li class="disabled">
+                    <li className="disabled">
                         <a href="#!" >
-                            <i class="material-icons">chevron_right</i>
+                            <i className="material-icons">chevron_right</i>
                         </a>
                     </li>)
             }else{
                 pagenationJsx.push(
-                    <li class="waves-effect">
+                    <li className="waves-effect">
                         <a href="#!" onClick={this.handleSubmit} >
-                            <i class="material-icons">chevron_right</i>
+                            <i className="material-icons">chevron_right</i>
                         </a>
                     </li>)
             }
@@ -123,12 +123,12 @@ class BookCatalog extends Component {
         
         return (
             <div className="bookCatalog container">
-                <p class='profilename red-text text-accent-1'>
+                <p className='profilename red-text text-accent-1'>
                     読書した本の一覧
-                    <NavLink to='/bookcreate' className="green-text right"><i class="material-icons">add</i></NavLink>
-                    <a class="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i class="material-icons">search</i></a>
+                    <NavLink to='/bookcreate' className="green-text right"><i className="material-icons">add</i></NavLink>
+                    <a className="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i className="material-icons">search</i></a>
                     <BookSearch />
-                    { this.props.tags.length === 0 ? null :<p class='search_condition'> (検索タグ:{this.props.tags.join('or')})</p> }
+                    { this.props.tags.length === 0 ? null :<p className='search_condition'> (検索タグ:{this.props.tags.join('or')})</p> }
                 </p>
                 <hr />
                 <div className="row">
