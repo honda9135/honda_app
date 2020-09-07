@@ -5,11 +5,17 @@ import { searchBook } from '../../store/actions/bookActions'
 
 class BookSearch extends Component {
     
-    state = {
-        tag:[] //検索するタグ  
+    constructor(props){
+        super(props);
+        this.state = {
+            tag:[] //検索するタグ  
+        }
+        this.handleChangeSelect = this.handleChangeSelect.bind(this)
+        this.handleChangeStar = this.handleChangeStar.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChangeSelect = (e) =>{
+    handleChangeSelect(e){
         const newtag = [];
         if(e){
             //選択したtagをリストにする
@@ -27,14 +33,14 @@ class BookSearch extends Component {
         }
     }
 
-    handleChangeStar = (e) =>{
+    handleChangeStar(e){
         //評価の星のhandler
         this.setState({
             star:e
         })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit(e){
         //検索の結果をactionクリエイターに飛ばす。
         e.preventDefault()
         this.props.searchBook(this.state.tag)

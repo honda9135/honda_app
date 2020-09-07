@@ -4,20 +4,25 @@ import { connect } from 'react-redux'
 import { signUp } from '../../store/actions/authActions'
 
 class SignUp extends Component {
-    state = {
-        email: '',
-        password: '',
-        firstName: '',
-        lastName: ''
+    constructor(props){
+        super(props)
+        this.state = {
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: ''
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange = (e) => {
+    handleChange(e){
         this.setState({
             [e.target.id]: e.target.value
         })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit(e){
         e.preventDefault()
         this.props.signUp(this.state);
     }

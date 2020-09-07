@@ -18,6 +18,7 @@ class BookCatalog extends Component {
         this.state ={
             page:1 //Paginationの現在のページ番号
         }
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount() {
@@ -25,7 +26,7 @@ class BookCatalog extends Component {
         M.AutoInit()
     }
 
-    handleSubmit = (event, value) => {
+    handleSubmit(event, value){
         this.setState({
             page:value
         })

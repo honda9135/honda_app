@@ -4,18 +4,24 @@ import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 
 class SignIn extends Component {
-    state = {
-        email: '', 
-        password: ''
+
+    constructor(props){
+        super(props)
+        this.state = {
+            email: '',  
+            password: ''
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange = (e) => {
+    handleChange(e){
         this.setState({
             [e.target.id]: e.target.value
         })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit(e){
         e.preventDefault()
         this.props.signIn(this.state)
     }

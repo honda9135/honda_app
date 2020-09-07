@@ -6,19 +6,25 @@ import { createBook } from '../../store/actions/bookActions'
 import { Redirect } from 'react-router-dom';
 
 class CreateBook extends Component {
-    
-    state = {
-        isbn:   '', //ISBNの値
-        title:  '', //本のタイトル
-        author: '', //本の著者
-        url:    '', //本のURL
-        imgUrl: '', //本の画像のURL
-        tag:    [], //関連するタグ
-        content:'', //本の感想
-        star:   0 , //本の評価
-        errtext:''  //エラー文
+    constructor(props){
+        super(props)
+        this.state = {
+            isbn:   '', //ISBNの値
+            title:  '', //本のタイトル
+            author: '', //本の著者
+            url:    '', //本のURL
+            imgUrl: '', //本の画像のURL
+            tag:    [], //関連するタグ
+            content:'', //本の感想
+            star:   0 , //本の評価
+            errtext:''  //エラー文
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleChangeSelect = this.handleChangeSelect.bind(this)
+        this.handleChangeStar = this.handleChangeStar.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
-
+    
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value

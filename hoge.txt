@@ -21,3 +21,5 @@ Reactの基礎からfirebaseのfirestoreについてまでハンズオン形式�
                     <li class="waves-effect"><a href="#!">5</a></li>
                     <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
                 </ul>
+
+"babel-jest": "^26.3.0",

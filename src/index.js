@@ -25,7 +25,7 @@ store.firebaseAuthIsReady.then(() => {
       <Provider store={store}>
           <App />
       </Provider>
-      </React.Fragment>,
+    </React.Fragment>,
     document.getElementById('root')
   );
 })
