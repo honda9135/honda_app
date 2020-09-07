@@ -37,6 +37,7 @@ class BookCatalog extends Component {
         
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
+        console.log(auth.uid,'uid')
 
         //booksは変更するためvarで宣言
         var { books } = this.props;
@@ -70,7 +71,7 @@ class BookCatalog extends Component {
         return (
             <div className="bookCatalog container">
                 <p className='profilename red-text text-accent-1'>
-                    読書した本の一覧
+                    私の読書本一覧
                     <NavLink to='/bookcreate' className="green-text right"><i className="material-icons">add</i></NavLink>
                     <a className="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i className="material-icons">search</i></a>
                     <BookSearch />
@@ -123,6 +124,9 @@ export default compose(
             firebaseQueries = [{
                 collection: 'books',
                 orderBy:['createdAt','desc'],
+                where:[
+                ['user','==',props.auth.uid]
+                ]
             }]
         }else{
             //条件ありの時
@@ -130,6 +134,7 @@ export default compose(
                 collection: 'books',
                 orderBy:['createdAt','desc'],
                 where:[
+                    ['user','==',props.auth.uid],
                     ['tag','array-contains-any', props.tags],
                 ],
             }]

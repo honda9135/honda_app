@@ -23,3 +23,106 @@ Reactの基礎からfirebaseのfirestoreについてまでハンズオン形式�
                 </ul>
 
 "babel-jest": "^26.3.0",
+
+import React, { Component } from 'react'
+import firebase from '../config/fbConfig'
+import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
+
+class Test extends Component {
+    
+    constructor(props){
+        super(props);
+        this.state ={
+            page:1 //Paginationの現在のページ番号
+        }
+    }
+
+    render(){
+        console.log(this.props.books,'testtesttest')
+        var db = firebase.firestore()
+        console.log(this.props,'props')
+        db.collection('users').doc('ZUvw66ppRIcKWvLqmdP2Dhjwk3c2').get().then((snapshot) => {
+                //console.log(snapshot.data().follow,'follow')
+                //console.log(this.props.follow,'test')
+        })
+
+        if (this.props.users){
+            const user = this.props.users[0]
+            const followers  = user.follow
+            console.log(followers,'follow')
+            db.collection('books').where('user',
+            'in',
+            followers).get()
+            .then((snapshot) =>{
+                snapshot.forEach((doc) =>{
+                console.log(doc.data())
+                })
+            })
+        }
+
+        return (
+            <h1>test</h1>
+        )
+    }
+}
+
+const mapStateToProps = (state) => {
+    console.log(state.firestore.ordered.users,'users')
+    console.log(state.firestore.ordered.books,'books')
+    console.log(state.firebase.auth.uid,'uid')
+    return {
+        users: state.firestore.ordered.users,
+        books:state.firestore.ordered.books,
+        tags: state.book.tags,
+        auth: state.firebase.auth
+    }
+}
+
+//export default compose(
+//    connect(mapStateToProps),
+//    firestoreConnect((props) =>{
+//        console.log(props,'wwwwwwwwwwwwww')
+//        return (
+//        [
+//        { 
+//            collection: 'users',
+//            doc:props.auth.uid,
+//         }
+//        ]
+//        )
+//    }
+//    )
+//)(Test);
+
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect( (props)  =>{
+        console.log(props.auth.uid,'props')
+        var firebaseQueries = [];
+
+        firebaseQueries.push(
+            {
+                collection: 'users',
+                doc:props.auth.uid,
+            }
+        )
+
+        if (props.users){
+            firebaseQueries.push(
+                {
+                    collection:'books',
+                    orderBy:['createdAt','desc'],
+                    where:['user','in',props.users[0].follow]
+                }
+            )
+        }
+
+        console.log(firebaseQueries)
+    
+        return firebaseQueries
+    })
+)(Test);
+
+display: flex;

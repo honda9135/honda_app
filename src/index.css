@@ -72,7 +72,8 @@ h3 {
   height:180px;
 }
 .card-content {
-  width:100%;
+  width:inherit;
+  padding: 0;
   height:100%;
 }
 .myprofile {
@@ -144,4 +145,12 @@ h3 {
 nav.MuiPagination-root{
   background-color: white;
   box-shadow:none
+}
+.collapsible {
+  width: min-content;
+}
+.book-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

@@ -6,7 +6,7 @@ const BookList = ({books}) => {
         <div className="book-list section">
             { books && books.map((book,index) => {
                 return (
-                        <BookSummary key={index} custumClass='' book={book} />
+                        <BookSummary key={index} custumClass='catalog_summary' book={book} />
                 )
             })}
         </div>

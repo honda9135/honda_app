@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
-import Myprofile from '../profile/Myprofile'
+//import Myprofile from '../profile/Myprofile'
 
 class Dashboard extends Component {
     render() {
@@ -17,6 +17,7 @@ class Dashboard extends Component {
         return (
             <div className="dashboard container">
                 <div className="row">
+                    {/*
                     <div className="col s12 m6">
                         <Myprofile />
                     </div>
@@ -24,7 +25,11 @@ class Dashboard extends Component {
                         <h3 className='header'>最新の読書情報</h3>
                         <BookList books={books} />
                     </div>
-                </div>
+                    */}
+
+                        <h3 className='header'>最新の読書情報</h3>
+                        <BookList books={books} />
+            </div>
             </div>
         )
     }
@@ -43,7 +48,7 @@ export default compose(
         { 
             collection: 'books',
             orderBy:['createdAt','desc'],
-            limit:3
+            limit:6
          }
 
     ])

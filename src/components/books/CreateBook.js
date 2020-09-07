@@ -9,15 +9,16 @@ class CreateBook extends Component {
     constructor(props){
         super(props)
         this.state = {
-            isbn:   '', //ISBNの値
-            title:  '', //本のタイトル
-            author: '', //本の著者
-            url:    '', //本のURL
-            imgUrl: '', //本の画像のURL
-            tag:    [], //関連するタグ
-            content:'', //本の感想
-            star:   0 , //本の評価
-            errtext:''  //エラー文
+            isbn:   '',         //ISBNの値
+            title:  '',         //本のタイトル
+            author: '',         //本の著者
+            url:    '',         //本のURL
+            imgUrl: '',         //本の画像のURL
+            tag:    [],         //関連するタグ
+            content:'',         //本の感想
+            star:   0 ,         //本の評価
+            errtext:'',         //エラー文
+            user:props.auth.uid  //user情報
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeSelect = this.handleChangeSelect.bind(this)
@@ -51,7 +52,17 @@ class CreateBook extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.createBook(this.state)
+        const bookInfo =  {
+            title:  this.state.title,       //本のタイトル
+            author: this.state.author,      //本の著者
+            url:    this.state.url,         //本のURL
+            imgUrl: this.state.imgUrl,      //本の画像のURL
+            tag:    this.state.tag,         //関連するタグ
+            content:this.state.content,     //本の感想
+            star:   this.state.star ,       //本の評価
+            user:   this.state.user         //user情報
+        }
+        this.props.createBook(bookInfo)
         this.props.history.push('/bookcatalog')
     }
 

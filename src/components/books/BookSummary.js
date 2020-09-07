@@ -40,13 +40,13 @@ export default class BookSummary extends Component {
                                 </div>
                             </div>
                             <div className="collapsible-body">
-                                <p className='book-content-title'>感想・コメント</p>
-                                {book.content}
-                            </div>
+                            <p className='book-content-title'>感想・コメント</p>
+                            {book.content}
+                        </div>
                         </li>
                     </ul>
                 </div>
-            </div>
+        </div>
         )
     }
 }
