@@ -10,13 +10,16 @@ class FollowModal extends Component{
         super(props)
         this.state = {
             follow_users:[],
-            follow_uid:props.profile.follow
+            follow_uid:[]
         }
+        console.log(props.profile.follow.length,'flasgfisgdfuiogsdoifg')
         this.getUser = this.getUser.bind(this)
     }
 
     componentDidMount(){
-        this.getUser()
+        // if(!this.props.profile.follow){
+        // this.getUser()
+        // }
     }
 
     getUser(){
@@ -44,7 +47,15 @@ class FollowModal extends Component{
     FollowerUpdate(beforeFollower,afterFollower){
         console.log(beforeFollower.length,afterFollower.length,'beforeFollower.length!==afterFollower.length')
         if(beforeFollower.length===afterFollower.length){
-            return null
+            if(!beforeFollower[0]&&afterFollower[0]){
+                //beforeFollowerの初期値''の時
+                this.getUser()
+                this.setState({
+                    follow_uid:afterFollower
+                })
+            }else{
+                return null
+            }
         }else{
             this.getUser()
             this.setState({

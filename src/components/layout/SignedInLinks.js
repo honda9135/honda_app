@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signOut } from '../../store/actions/authActions'
 import M from "materialize-css";
+import FollowModal from '../follow/FollowModal'
 
 
 class SignedInLinks extends Component{
@@ -23,6 +24,13 @@ class SignedInLinks extends Component{
                 <li><NavLink to='/' className="btn btn-floating">{this.props.profile.initials}</NavLink></li>
                 {/* <li><NavLink to='/test' className="btn btn-floating">tt</NavLink></li> */}
                 </ul>
+                {
+                    this.props.profile.isLoaded
+                    ?
+                    <FollowModal profile={this.props.profile} /> 
+                    :
+                    null
+                } 
             </frameElement>
         )
     }

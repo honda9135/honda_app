@@ -10,7 +10,7 @@ import Profile from './components/profile/Profile';
 import Test from './config/test';
 import FollowCatalogDisplay from './components/follow/FollowCatalogDisplay'
 import FollowSearch from './components/follow/FollowSearch';
-import FollowModal from './components/follow/FollowModal'
+//import FollowModal from './components/follow/FollowModal'
 import { connect } from 'react-redux'
 
 
@@ -32,13 +32,13 @@ class App extends Component {
             <Route path='/search' component={FollowSearch} />
           </Switch>
         </div>
-        {
-          this.props.profile.isLoaded
-          ?
-          <FollowModal profile={this.props.profile} /> 
-          :
-          null
-        }
+                {/* {
+                    this.props.profile.isLoaded
+                    ?
+                    <FollowModal profile={this.props.profile} /> 
+                    :
+                    null
+                }  */}
       </BrowserRouter>
     );
   }
