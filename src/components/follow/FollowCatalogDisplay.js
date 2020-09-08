@@ -3,28 +3,20 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
-import FollowBookCatalog from '../components/books/FollowBookCatalog'
+import FollowBookCatalog from '../books/FollowBookCatalog'
 
-class Test extends Component {
-    
-    constructor(props){
-        super(props);
-        this.state ={
-            flag:false //Paginationの現在のページ番号
-        }
-    }
-
+class FollowCatalogDisplay extends Component {
     render(){
         console.log(this.props.users,'testtesttest')
+        console.log('ああああああああああああああああああああああ')
         //var db = firebase.firestore()
-         if(this.props.users){
+         if(this.props.users&&this.props.users.length!==0){
              console.log(this.props.users[0])
              return (<FollowBookCatalog follower={this.props.users[0]} />)
          }
          else{
              return (<h1>ロードナウ</h1>)
          }
-        //return (<h1>ロードナウ</h1>)
     }
 }
 
@@ -45,7 +37,7 @@ const mapStateToProps = (state) => {
              }]
          return firebaseQueries
      })
-)(Test);
+)(FollowCatalogDisplay);
 
 
 // const mapStateToProps = (state) => {

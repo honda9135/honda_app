@@ -60,7 +60,7 @@ class BookSearch extends Component {
         ]
         
         return (
-            <div id="modal1" className="modal bottom-sheet">
+            <div id="modal1" className="modal">
                 <form onSubmit={console.log(this.state.tag)} className="white searh-form">
                     <div className="modal-content">
                         <Select isMulti  maxMenuHeight={150} className='tagarea_search'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />

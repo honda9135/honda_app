@@ -120,7 +120,8 @@ h3 {
   margin-top:3px;
 }
 .modal {
-  position: relative;
+  /* position: relative;  */
+   overflow-y: auto; 
 }
 .search_condition {
   float: right;
@@ -153,4 +154,7 @@ nav.MuiPagination-root{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.searchClear{
+  margin: 10px;
 }

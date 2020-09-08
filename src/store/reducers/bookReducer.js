@@ -1,6 +1,5 @@
 const initState = {
                     tags:[],
-                    sum:-1
                 }
 const bookReducer = (state = initState, action) => {
     switch (action.type) {
@@ -14,6 +13,12 @@ const bookReducer = (state = initState, action) => {
             return {
                 ...state,
             }
+        case 'INIT_TAGS':
+                console.log(action.tags,'search')
+                return {
+                    ...state,
+                    tags:[]
+                }
         case 'SEARCH_BOOK':
             console.log(action.tags,'search')
             return {

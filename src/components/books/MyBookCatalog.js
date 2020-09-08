@@ -9,6 +9,7 @@ import M from "materialize-css";
 import BookSearch from './BookSearch'
 import { Pagination } from '@material-ui/lab'
 import firebase from '../../config/fbConfig'
+import { searchBook } from '../../store/actions/bookActions'
 
 
 class BookCatalog extends Component {
@@ -19,6 +20,9 @@ class BookCatalog extends Component {
             page:1 //Paginationの現在のページ番号
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+
+        //検索の初期化
+        this.props.searchBook([])
     }
 
     componentDidMount() {
@@ -51,7 +55,8 @@ class BookCatalog extends Component {
                 url:'https://unsplash.com/s/photos/book',
                 tag:['その他'],
                 star:5,
-                createdAt: firebase.firestore.Timestamp.fromDate(new Date())
+                createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+                init:true
             }]
         }
 
@@ -72,7 +77,15 @@ class BookCatalog extends Component {
             <div className="bookCatalog container">
                 <p className='profilename red-text text-accent-1'>
                     私の読書本一覧
-                    <NavLink to='/bookcreate' className="green-text right"><i className="material-icons">add</i></NavLink>
+                        { books[0].init ?
+                                <NavLink to='/bookcreate' className="green-text right btn-floating pulse">
+                                    <i className="material-icons">add</i>
+                                </NavLink>
+                            :
+                                <NavLink to='/bookcreate' className="green-text right">
+                                    <i className="material-icons">add</i>
+                                </NavLink>
+                        }
                     <a className="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i className="material-icons">search</i></a>
                     <BookSearch />
 
@@ -97,13 +110,13 @@ class BookCatalog extends Component {
                 </div>
                 
                 <Pagination count={allpage} color="secondary" page={this.state.page} onChange={this.handleSubmit} />
-
             </div>
         )
     }
 }
 
 const mapStateToProps = (state,props) => {
+    console.log(state.firebase.profile.follow)
     return {
         books: state.firestore.ordered.books,
         tags: state.book.tags,
@@ -111,9 +124,15 @@ const mapStateToProps = (state,props) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        searchBook: (tags) => dispatch(searchBook(tags))
+    }
+}
+
 
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps,mapDispatchToProps),
     firestoreConnect((props) =>{
         
         //firestoreに要求するqueryを作成する

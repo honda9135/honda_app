@@ -9,6 +9,7 @@ import M from "materialize-css";
 import BookSearch from './BookSearch'
 import { Pagination } from '@material-ui/lab'
 import firebase from '../../config/fbConfig'
+import { searchBook } from '../../store/actions/bookActions'
 
 
 class FollowBookCatalog extends Component {
@@ -19,6 +20,9 @@ class FollowBookCatalog extends Component {
             page:1 //Paginationの現在のページ番号
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+        
+        //検索の初期化
+        this.props.searchBook([])
     }
 
     componentDidMount() {
@@ -35,7 +39,7 @@ class FollowBookCatalog extends Component {
     render() {
         const { auth , follower } = this.props;
         console.log(auth.uid,'auth')
-        console.log(follower.uid,'follower')
+        console.log(follower.id,'follower')
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
         console.log(auth.uid,'uid')
@@ -112,9 +116,14 @@ const mapStateToProps = (state,props) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        searchBook: (tags) => dispatch(searchBook(tags))
+    }
+}
 
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps,mapDispatchToProps),
     firestoreConnect((props) =>{
         
         //firestoreに要求するqueryを作成する
@@ -126,7 +135,7 @@ export default compose(
                 collection: 'books',
                 orderBy:['createdAt','desc'],
                 where:[
-                ['user','==',props.follower.uid]
+                ['user','==',props.follower.id]
                 ]
             }]
         }else{
@@ -135,12 +144,11 @@ export default compose(
                 collection: 'books',
                 orderBy:['createdAt','desc'],
                 where:[
-                    ['user','==',props.follower.uid],
+                    ['user','==',props.follower.id],
                     ['tag','array-contains-any', props.tags],
                 ],
             }]
         }
-
         return firebaseQueries
     }
     )
