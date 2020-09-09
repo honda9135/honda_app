@@ -135,12 +135,15 @@ class CreateBook extends Component {
         
         //tagの準備
         const options = [
-            {value: 'その他', label: 'その他'},
+            { value: '小説', label: '小説'},
             { value: '技術', label: '技術' },
             { value: '啓発', label: '啓発' },
             { value: '経済', label: '経済' },
             { value: '哲学', label: '哲学' },
-            { value: '宗教', label: '宗教' }
+            { value: '宗教', label: '宗教' },
+            {value: '政治', label: '政治'},
+            {value: '社会', label: '社会'},
+            {value: 'その他', label: 'その他'}
           ]
 
         return (
