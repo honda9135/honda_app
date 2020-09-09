@@ -24,10 +24,19 @@ const followReducer = (state = initState, action) => {
                 new_uid:' '
             }
         case 'REGIST_ERROR':
-            console.log('REGIST_ERRO', action.err);
             return {
                  ...state,
             }
+        case 'DELE_FOLLOW':
+            alert('followerの削除をしました')
+            return{
+                ...state,
+            }
+        case 'DELE_FOLLOW_ERROR':
+            alert('followerの削除を失敗しました')
+            return {
+                ...state,
+            }        
         default: 
            return {
             ...state,

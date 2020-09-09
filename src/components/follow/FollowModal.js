@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import firebase from '../../config/fbConfig'
 import { NavLink } from 'react-router-dom'
 import FollowSearch from './FollowSearch'
+import M from "materialize-css";
+
 
 class FollowModal extends Component{
     
@@ -12,14 +14,15 @@ class FollowModal extends Component{
             follow_users:[],
             follow_uid:[]
         }
-        console.log(props.profile.follow.length,'flasgfisgdfuiogsdoifg')
         this.getUser = this.getUser.bind(this)
     }
 
     componentDidMount(){
-        // if(!this.props.profile.follow){
-        // this.getUser()
-        // }
+        this.FollowerUpdate(this.state.follow_uid,this.props.profile.follow)
+        M.AutoInit()
+    }
+    componentDidUpdate(){
+        this.FollowerUpdate(this.state.follow_uid,this.props.profile.follow)
     }
 
     getUser(){
@@ -40,12 +43,7 @@ class FollowModal extends Component{
         })
     }
 
-    componentDidUpdate(){
-        this.FollowerUpdate(this.state.follow_uid,this.props.profile.follow)
-    }
-
     FollowerUpdate(beforeFollower,afterFollower){
-        console.log(beforeFollower.length,afterFollower.length,'beforeFollower.length!==afterFollower.length')
         if(beforeFollower.length===afterFollower.length){
             if(!beforeFollower[0]&&afterFollower[0]){
                 //beforeFollowerの初期値''の時
@@ -64,8 +62,8 @@ class FollowModal extends Component{
         }
     }
 
+
     render(){
-        console.log(this.props.profile,'profile')
         return (
         <div id="modal2" class="modal bottom-sheet">
             <div class="modal-content">
@@ -77,10 +75,10 @@ class FollowModal extends Component{
                 <ul className='collection'>
                     {this.state.follow_users.map(user =>{
                         return (
-                            <li className='collection-item '>
+                            <li className='collection-item follow-modal'>
                                 <NavLink to={'/follow/'+user.uid}>
                                     <p  className='btn btn-floating circl modal-close'>{user.initials}</p>
-                                    <span className='modal-close'>{user.firstName+'・'+user.lastName}</span>
+                                    <span className='modal-close'>{user.firstName+'・'+user.lastName} </span>
                                 </NavLink>
                             </li>        
                         )
@@ -101,5 +99,6 @@ const mapStateToProps = (state) => {
         auth: state.firebase.auth,
     }
 }
+
 
 export default connect(mapStateToProps,null)(FollowModal);

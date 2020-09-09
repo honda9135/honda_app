@@ -158,3 +158,12 @@ nav.MuiPagination-root{
 .searchClear{
   margin: 10px;
 }
+.preloader-wrapper.big{
+  left:50%;
+}
+.delbook{
+  margin:20px 0;
+}
+.delfollow{
+  margin:20px 0;
+}

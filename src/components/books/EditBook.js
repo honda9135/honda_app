@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import ReactStarsRating from 'react-awesome-stars-rating';
-import { createBook } from '../../store/actions/bookActions'
+import firebase from '../../config/fbConfig'
+import { editBook,deleBook } from '../../store/actions/bookActions'
 import { Redirect } from 'react-router-dom';
 
-class CreateBook extends Component {
+class EditBook extends Component {
     constructor(props){
         super(props)
         this.state = {
-            isbn:   '',         //ISBNの値
+            isbn: '',
             title:  '',         //本のタイトル
             author: '',         //本の著者
             url:    '',         //本のURL
@@ -18,14 +19,35 @@ class CreateBook extends Component {
             content:'',         //本の感想
             star:   0 ,         //本の評価
             errtext:'',         //エラー文
-            user:props.auth.uid  //user情報
+            id:props.match.params.id, //本のid
+            user:''   ,         //user情報
+            createdAt:null      //時間の情報
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeSelect = this.handleChangeSelect.bind(this)
         this.handleChangeStar = this.handleChangeStar.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleEditSubmit = this.handleEditSubmit.bind(this)
+        this.handleDeleSubmit = this.handleDeleSubmit.bind(this)
     }
     
+    componentDidMount(){
+        var db = firebase.firestore()
+        db.collection('books').doc(this.state.id).get().then(
+            snapshot => {
+                var data = snapshot.data()
+                console.log(data)
+                if(data){
+                    this.setState({...data})
+                }
+            }
+        ).catch((err) =>{
+            console.log('検索エラー')
+            this.setState({
+                errtext:'本を検索できませんでした'
+            })
+        })
+    }
+
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -50,7 +72,7 @@ class CreateBook extends Component {
         })
     }
 
-    handleSubmit = (e) => {
+    handleEditSubmit = (e) => {
         e.preventDefault()
         const bookInfo =  {
             title:  this.state.title,       //本のタイトル
@@ -60,10 +82,18 @@ class CreateBook extends Component {
             tag:    this.state.tag,         //関連するタグ
             content:this.state.content,     //本の感想
             star:   this.state.star ,       //本の評価
-            user:   this.state.user,        //user情報
-            isbn:   this.state.isbn         //isbn情報
+            user:   this.state.user ,       //user情報
+            isbn:   this.state.isbn ,       //isbn情報
+            id :    this.state.id   ,       //本のID
+            createdAt:this.state.createdAt
         }
-        this.props.createBook(bookInfo)
+        this.props.editBook(bookInfo)
+        this.props.history.push('/')
+    }
+    
+    handleDeleSubmit = (e) => {
+        e.preventDefault()
+        this.props.deleBook(this.state.id)
         this.props.history.push('/')
     }
 
@@ -129,6 +159,7 @@ class CreateBook extends Component {
     }
 
     render() {
+        console.log(this.state)
         const { auth } = this.props;
         //ログインしているかチェック
         if (!auth.uid) return <Redirect to='/signin' />
@@ -151,7 +182,7 @@ class CreateBook extends Component {
                     <h5 className="red-text text-accent-1"><a href='https://blog.qbist.co.jp/?p=3071' rel="noopener noreferrer" target="_blank">ISBN</a>での検索</h5>
                     <div className="input-field">
                         <label htmlFor="isbn">ISBNの入力(例978-4-87311-565-8)</label>
-                        <input type="text" id="isbn"  onChange={this.handleChange} />
+                        <input type="text" id="isbn"  value={this.state.isbn} onChange={this.handleChange} />
                         <div className="red-text center">
                             {/*ISBNのエラーを表示 */}
                             { this.state.errtext ? <p>{this.state.errtext}</p> : null }
@@ -164,8 +195,8 @@ class CreateBook extends Component {
                 </form>
 
                 {/*本の情報登録用のフォーム */}
-                <form onSubmit={this.handleSubmit} className="white createBookForm">
-                    <h5 className="red-text text-accent-1">読書本の手動登録</h5>
+                <form onSubmit={this.handleEditSubmit} className="white createBookForm">
+                    <h5 className="red-text text-accent-1">読書本の修正</h5>
                     <div className="input-field">
                         <label htmlFor="title">本の名前</label>
                         <input type="text" id="title" value={this.state.title} onChange={this.handleChange} />
@@ -195,7 +226,8 @@ class CreateBook extends Component {
                         </div>
                     </div>
                     <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">登録</button>
+                        <button className="btn pink lighten-1 z-depth-0">修正</button>
+                        <a href='#!' onClick={this.handleDeleSubmit} className="btn red white-text z-depth-0 right delbook">本の削除 <i className="material-icons">delete</i></a>
                     </div>
                 </form>
             </div>
@@ -211,8 +243,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createBook: (book) => dispatch(createBook(book))
+        editBook: (book) => dispatch(editBook(book)),
+        deleBook: (id) => dispatch(deleBook(id))
     }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateBook)
+export default connect(mapStateToProps, mapDispatchToProps)(EditBook)

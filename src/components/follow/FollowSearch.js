@@ -35,9 +35,16 @@ class FollowSearch extends Component {
         db.collection('users').doc(this.state.uid).get().then(
             snapshot => {
                 var data = snapshot.data()
-                this.setState({
-                    user:data
-                })
+                if(data){
+                    this.setState({
+                        user:data
+                    })
+                }else{
+                    this.setState({
+                        user:{},
+                        errtext:'IDを見つけることができません。'
+                    })
+                }
             }
         ).catch((err) =>{
             this.setState({
@@ -108,6 +115,20 @@ class FollowSearch extends Component {
                                     </ul>
                                     <div className="red-text center">
                                         <p>すでにfollowしています。</p>
+                                    </div>
+                                    </frameElement>
+                                )
+                            }else if(this.props.auth.uid===this.state.uid){
+                                return (
+                                    <frameElement>
+                                    <ul className='collection'>
+                                        <li className='collection-item '>
+                                            <p  className='btn btn-floating circl '>{this.state.user.initials}</p>
+                                            <span >{this.state.user.firstName+'・'+this.state.user.lastName}</span>
+                                        </li>        
+                                    </ul>
+                                    <div className="red-text center">
+                                        <p>自分はfollowできません。</p>
                                     </div>
                                     </frameElement>
                                 )

@@ -21,3 +21,33 @@ export const searchBook = (tags) => {
         }
     }
 };
+
+export const editBook = (book) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        const id = book.id;
+        delete book.id
+        firestore.collection('books').doc(id).set({
+            ...book,
+        }).then(() => {
+            alert('本の編集をしました')
+            dispatch({ type: 'EDIT_BOOK', book})
+        }).catch((err) => {
+            alert('本の編集に失敗しました。')
+            dispatch({ type: 'EDIT_BOOK_ERROR', err })
+        })
+    }
+};
+
+export const deleBook = (id) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        firestore.collection('books').doc(id).delete().then(() => {
+            alert('本を削除しました。');
+            dispatch({ type: 'DELL_BOOK'})
+        }).catch((err) => {
+            alert('本の削除に失敗しました。')
+            dispatch({ type: 'DELL_BOOK_ERROR', err })
+        })
+    }
+};

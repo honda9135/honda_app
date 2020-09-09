@@ -13,3 +13,20 @@ export const registFollow = (reg) => {
         })
     }
 };
+
+export const deleFollow = (auth,profile,delUid) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        const follow = profile.follow.filter(elm =>{
+            return elm!==delUid
+        })
+        firestore.collection('users').doc(auth.uid).set({
+            ...profile,
+            follow:follow
+        }).then(() => {
+            dispatch({type:'DELE_FOLLOW'})
+        }).catch((err) => {
+            dispatch({ type: 'DELE_FOLLOW_ERROR', err })
+        })
+    }
+};

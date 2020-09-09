@@ -10,6 +10,7 @@ import BookSearch from './BookSearch'
 import { Pagination } from '@material-ui/lab'
 import firebase from '../../config/fbConfig'
 import { searchBook } from '../../store/actions/bookActions'
+import { deleFollow } from '../../store/actions/followActions'
 
 
 class FollowBookCatalog extends Component {
@@ -20,6 +21,7 @@ class FollowBookCatalog extends Component {
             page:1 //Paginationの現在のページ番号
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleDeleSubmit = this.handleDeleSubmit.bind(this)
         
         //検索の初期化
         this.props.searchBook([])
@@ -35,7 +37,12 @@ class FollowBookCatalog extends Component {
             page:value
         })
     }
-
+    handleDeleSubmit(e){
+        e.preventDefault()
+        this.props.deleFollow(this.props.auth,this.props.profile,this.props.follower.id)
+        console.log(this.props.history)
+        this.props.history.push('/')
+    }
     render() {
         const { auth , follower } = this.props;
         console.log(auth.uid,'auth')
@@ -78,7 +85,8 @@ class FollowBookCatalog extends Component {
                 <p className='profilename red-text text-accent-1'>
                     {follower.firstName}・{follower.lastName}の読書本一覧
                     {/* <NavLink to='/bookcreate' className="green-text right"><i className="material-icons">add</i></NavLink> */}
-                    <a className="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i className="material-icons">search</i></a>
+                    <a href='#!'  className='right red-text' title='followを外す' onClick={this.handleDeleSubmit}><i className="material-icons">clear</i></a>
+                    <a className="waves-effect waves-light modal-trigger green-text right" title='タグで検索する' href="#modal1"><i className="material-icons">search</i></a>
                     <BookSearch />
 
                     {/* 検索の内容を表示させる*/}
@@ -111,6 +119,7 @@ class FollowBookCatalog extends Component {
 const mapStateToProps = (state,props) => {
     return {
         books: state.firestore.ordered.books,
+        profile: state.firebase.profile,
         tags: state.book.tags,
         auth: state.firebase.auth
     }
@@ -118,7 +127,8 @@ const mapStateToProps = (state,props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        searchBook: (tags) => dispatch(searchBook(tags))
+        searchBook: (tags) => dispatch(searchBook(tags)),
+        deleFollow: (auth,profile,delUid) => dispatch(deleFollow(auth,profile,delUid))
     }
 }
 

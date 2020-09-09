@@ -61,7 +61,7 @@ class BookSearch extends Component {
         
         return (
             <div id="modal1" className="modal">
-                <form onSubmit={console.log(this.state.tag)} className="white searh-form">
+                <form  className="white searh-form">
                     <div className="modal-content">
                         <Select isMulti  maxMenuHeight={150} className='tagarea_search'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
                         <br />
@@ -77,7 +77,7 @@ class BookSearch extends Component {
                             </a>
                             検索結果は10件までしか表示できません(Update予定)
                         </p>
-                        <a href="#!" onClick= {this.handleSubmit} className="modal-close waves-effect waves-green btn-flat orange">検索</a>
+                        <a href="#!" onClick= {this.handleSubmit} className="modal-close btn pink lighten-1 z-depth-0">検索</a>
                     </div>
                 </form>
             </div>

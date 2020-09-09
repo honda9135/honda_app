@@ -41,7 +41,6 @@ class BookCatalog extends Component {
         
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
-        console.log(auth.uid,'uid')
 
         //booksは変更するためvarで宣言
         var { books } = this.props;
@@ -86,7 +85,7 @@ class BookCatalog extends Component {
                                     <i className="material-icons">add</i>
                                 </NavLink>
                         }
-                    <a className="waves-effect waves-light modal-trigger green-text right" href="#modal1"><i className="material-icons">search</i></a>
+                    <a className="waves-effect waves-light modal-trigger green-text right"　title='タグで検索する' href="#modal1"><i className="material-icons">search</i></a>
                     <BookSearch />
 
                     {/* 検索の内容を表示させる*/}
@@ -116,7 +115,6 @@ class BookCatalog extends Component {
 }
 
 const mapStateToProps = (state,props) => {
-    console.log(state.firebase.profile.follow)
     return {
         books: state.firestore.ordered.books,
         tags: state.book.tags,
@@ -138,7 +136,9 @@ export default compose(
         //firestoreに要求するqueryを作成する
         var firebaseQueries = [];
 
-        if (props.tags.length === 0){
+        if(!props.auth.uid){
+            firebaseQueries = []
+        }else if (props.tags.length === 0){
             //条件なしの時
             firebaseQueries = [{
                 collection: 'books',

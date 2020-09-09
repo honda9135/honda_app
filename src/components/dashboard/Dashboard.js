@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
+import Loading from '../../config/Loading'
 //import Myprofile from '../profile/Myprofile'
 
 class Dashboard extends Component {
     render() {
-        const { books, auth } = this.props;
+        const { books, auth , profile } = this.props;
         
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
@@ -17,19 +18,18 @@ class Dashboard extends Component {
         return (
             <div className="dashboard container">
                 <div className="row">
-                    {/*
-                    <div className="col s12 m6">
-                        <Myprofile />
-                    </div>
-                    <div className="col s12 m5 offset-m1">
-                        <h3 className='header'>最新の読書情報</h3>
-                        <BookList books={books} />
-                    </div>
-                    */}
-
-                        <h3 className='header'>最新の読書情報</h3>
-                        <BookList books={books} />
-            </div>
+                <p className='profilename red-text text-accent-1'>
+                    最新の読書情報
+                </p>
+                <hr />
+                        {
+                            profile.isLoaded&&profile.follow!==undefined
+                            ?
+                            <BookList books={books} />
+                            :
+                            <Loading />
+                        }
+                </div>
             </div>
         )
     }
@@ -38,18 +38,25 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
     return {
         books: state.firestore.ordered.books,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        profile: state.firebase.profile
     }
 }
 
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([
-        { 
-            collection: 'books',
-            orderBy:['createdAt','desc'],
-            limit:6
-         }
-
-    ])
+    firestoreConnect((props) =>{
+        if(props.profile.isLoaded&&props.profile.follow!==undefined){
+            return (
+                [{ 
+                    collection: 'books',
+                    orderBy:['createdAt','desc'],
+                    where:['user','in',[...props.profile.follow,props.auth.uid]],
+                    limit:6
+                }]
+            )
+        }else{
+            return []
+        }
+})
 )(Dashboard);
