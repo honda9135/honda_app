@@ -34,6 +34,7 @@ class BookSummary extends Component {
                                         <div className={"card-content " + custumClass}>
                                             {/*↑classNameを変更できるようにした。cssで見た目を変える*/}
                                             <span className="card-title">{book.title}</span>
+                                            <hr />
                                             <p>著者: {book.author}</p>
                                             <p>タグ: {book.tag.join(",")}</p>
                                             <ReactStarsRating   size={15} isEdit={false} value={book.star} />

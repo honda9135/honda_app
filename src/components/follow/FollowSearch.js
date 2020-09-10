@@ -94,10 +94,10 @@ class FollowSearch extends Component {
                         {
                             Object.keys(this.state.user).length
                             ?
-                            <input type="reset" form="uid" onClick={this.handleClear}  className="btn pink lighten-1 z-depth-0 searchClear" value='Clear'/>
+                            <input type="reset" form="uid" onClick={this.handleClear}  className="btn    pink lighten-1 z-depth-0 searchClear" value='Clear'/>
                             // <a href='#!' onClick={this.handleClear} className="btn pink lighten-1 z-depth-0 searchClear">Clear</a>    
                             :
-                            <button className="btn pink lighten-1 z-depth-0">検索</button>
+                            <button className="btn   pink lighten-1 z-depth-0">検索</button>
                         }
                     </div>
                     {
@@ -109,7 +109,7 @@ class FollowSearch extends Component {
                                     <frameElement>
                                     <ul className='collection'>
                                         <li className='collection-item '>
-                                            <p  className='btn btn-floating circl '>{this.state.user.initials}</p>
+                                            <p  className='btn btn-floating   circl '>{this.state.user.initials}</p>
                                             <span >{this.state.user.firstName+'・'+this.state.user.lastName}</span>
                                         </li>        
                                     </ul>
@@ -123,7 +123,7 @@ class FollowSearch extends Component {
                                     <frameElement>
                                     <ul className='collection'>
                                         <li className='collection-item '>
-                                            <p  className='btn btn-floating circl '>{this.state.user.initials}</p>
+                                            <p  className='btn btn-floating   circl '>{this.state.user.initials}</p>
                                             <span >{this.state.user.firstName+'・'+this.state.user.lastName}</span>
                                         </li>        
                                     </ul>
@@ -137,13 +137,13 @@ class FollowSearch extends Component {
                                     <frameElement>
                                     <ul className='collection'>
                                         <li className='collection-item '>
-                                            <p  className='btn btn-floating circl '>{this.state.user.initials}</p>
+                                            <p  className='btn btn-floating   circl '>{this.state.user.initials}</p>
                                             <span >{this.state.user.firstName+'・'+this.state.user.lastName}</span>
                                         </li>        
                                     </ul>
                                     <form onSubmit={this.handleRegist} className="white createBookForm">
                                         <div className="input-field">
-                                            <button className="btn pink lighten-1 modal-close z-depth-0">登録</button>
+                                            <button className="btn pink   lighten-1 modal-close z-depth-0">登録</button>
                                         </div>
                                     </form >
                                     </frameElement>

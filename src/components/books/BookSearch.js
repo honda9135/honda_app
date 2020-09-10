@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import { searchBook } from '../../store/actions/bookActions'
+import M from "materialize-css";
 
 class BookSearch extends Component {
     
@@ -13,6 +14,9 @@ class BookSearch extends Component {
         this.handleChangeSelect = this.handleChangeSelect.bind(this)
         this.handleChangeStar = this.handleChangeStar.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+    }
+    componentDidMount(){
+        M.AutoInit()
     }
 
     handleChangeSelect(e){
@@ -45,9 +49,9 @@ class BookSearch extends Component {
         e.preventDefault()
         this.props.searchBook(this.state.tag)
     }
-
+    
     render(){
-
+        
         //tagの内容(constructorに任せてもいいかも)
         const options = [
             { value: '小説', label: '小説'},
@@ -64,7 +68,7 @@ class BookSearch extends Component {
         return (
             <div id="modal1" className="modal">
                 <form  className="white searh-form">
-                    <div className="modal-content">
+                    <div  className="modal-content">
                         <Select isMulti  maxMenuHeight={150} className='tagarea_search'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
                         <br />
                         <br />
@@ -79,7 +83,7 @@ class BookSearch extends Component {
                             </a>
                             検索結果は10件までしか表示できません(Update予定)
                         </p>
-                        <a href="#!" onClick= {this.handleSubmit} className="modal-close btn pink lighten-1 z-depth-0">検索</a>
+                        <a href="#!" onClick= {this.handleSubmit} className="modal-close btn   pink lighten-1 z-depth-0">検索</a>
                     </div>
                 </form>
             </div>

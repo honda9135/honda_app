@@ -45,16 +45,16 @@ class FollowModal extends Component{
 
     FollowerUpdate(beforeFollower,afterFollower){
         if(beforeFollower.length===afterFollower.length){
-            if(!beforeFollower[0]&&afterFollower[0]){
-                //beforeFollowerの初期値''の時
-                this.getUser()
-                this.setState({
-                    follow_uid:afterFollower
-                })
-            }else{
-                return null
-            }
+            //followerの変更なし
+            return null
+        }else if(afterFollower.length===0){
+            //followerの変更が行われてfollowerがいなくなった時
+            this.setState({
+                follow_uid:[],
+                follow_users:[]
+            })
         }else{
+            //followerの変更が行われた時
             this.getUser()
             this.setState({
                 follow_uid:afterFollower
@@ -77,7 +77,7 @@ class FollowModal extends Component{
                         return (
                             <li className='collection-item follow-modal'>
                                 <NavLink to={'/follow/'+user.uid}>
-                                    <p  className='btn btn-floating circl modal-close'>{user.initials}</p>
+                                    <p  className='btn btn-floating   circl modal-close'>{user.initials}</p>
                                     <span className='modal-close'>{user.firstName+'・'+user.lastName} </span>
                                 </NavLink>
                             </li>        
@@ -86,7 +86,7 @@ class FollowModal extends Component{
                 </ul>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-close btn pink lighten-1 z-depth-0">閉じる</a>
+                <a href="#!" class="modal-close btn pink   lighten-1 z-depth-0">閉じる</a>
             </div>
             <FollowSearch profile={this.props.profile}/>
         </div>

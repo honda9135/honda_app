@@ -193,7 +193,7 @@ class EditBook extends Component {
                     </div>
                     <div className="input-field">
                         {/*ISBNの検索ボタン*/}
-                        <button className="btn pink lighten-1 z-depth-0">検索</button>
+                        <button className="btn   pink lighten-1 z-depth-0">検索</button>
                     </div>
                 </form>
 
@@ -230,7 +230,7 @@ class EditBook extends Component {
                     </div>
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">修正</button>
-                        <a href='#!' onClick={this.handleDeleSubmit} className="btn red white-text z-depth-0 right delbook">本の削除 <i className="material-icons">delete</i></a>
+                        <a href='#!' onClick={this.handleDeleSubmit} className="btn   red white-text z-depth-0 right delbook">本の削除 <i className="material-icons">delete</i></a>
                     </div>
                 </form>
             </div>

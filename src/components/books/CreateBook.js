@@ -162,7 +162,7 @@ class CreateBook extends Component {
                     </div>
                     <div className="input-field">
                         {/*ISBNの検索ボタン*/}
-                        <button className="btn pink lighten-1 z-depth-0">検索</button>
+                        <button className="btn   pink lighten-1 z-depth-0">検索</button>
                     </div>
                 </form>
 
@@ -198,7 +198,7 @@ class CreateBook extends Component {
                         </div>
                     </div>
                     <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">登録</button>
+                        <button className="btn   pink lighten-1 z-depth-0">登録</button>
                     </div>
                 </form>
             </div>

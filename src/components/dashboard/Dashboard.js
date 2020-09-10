@@ -6,14 +6,16 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import Loading from '../../config/Loading'
-//import Myprofile from '../profile/Myprofile'
 
 class Dashboard extends Component {
     render() {
-        const { books, auth , profile } = this.props;
+        const { books, auth } = this.props;
         
-        //もしログインしてなかったらsigninにリダイレクト
-        if (!auth.uid) return <Redirect to='/signin' />
+        //もしログインしてなかったら/にリダイレクト
+        if (!auth.uid) return <Redirect to='/' />
+        if(this.props.profile.isLoaded&&this.props.profile.follow!==undefined&&this.props.profile.follow.length===0) {
+            return <Redirect to='/mybookcatalog' />
+        }
 
         return (
             <div className="dashboard container">
@@ -23,11 +25,11 @@ class Dashboard extends Component {
                 </p>
                 <hr />
                         {
-                            profile.isLoaded&&profile.follow!==undefined
+                            books===undefined||books.length===0
                             ?
-                            <BookList books={books} />
-                            :
                             <Loading />
+                            :
+                            <BookList books={books} />
                         }
                 </div>
             </div>
