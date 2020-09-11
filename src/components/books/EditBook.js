@@ -21,7 +21,8 @@ class EditBook extends Component {
             errtext:'',         //エラー文
             id:props.match.params.id, //本のid
             user:''   ,         //user情報
-            createdAt:null      //時間の情報
+            createdAt:null,     //時間の情報
+            default_tag:[]      //タグのdefaultに使用
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeSelect = this.handleChangeSelect.bind(this)
@@ -39,9 +40,17 @@ class EditBook extends Component {
                 if(data){
                     this.setState({...data})
                 }
-            }
+                if(this.state.tag.length!==0){
+                    this.state.tag.map((tag)=>{
+                        this.setState({
+                            default_tag:this.state.default_tag.push({value: tag, label: tag})   
+                        })
+                        return null
+                    })
+                }
+        }
         ).catch((err) =>{
-            console.log('検索エラー')
+            console.log(err)
             this.setState({
                 errtext:'本を検索できませんでした'
             })
@@ -184,7 +193,7 @@ class EditBook extends Component {
                 <form onSubmit={this.handleSubmitIsbn} className="white createBookForm">
                     <h5 className="red-text text-accent-1"><a href='https://blog.qbist.co.jp/?p=3071' rel="noopener noreferrer" target="_blank">ISBN</a>での検索</h5>
                     <div className="input-field">
-                        <label htmlFor="isbn">ISBNの入力(例978-4-87311-565-8)</label>
+                        <label htmlFor="isbn" className={this.state.isbn?'active':''}>ISBNの入力(例978-4-87311-565-8)</label>
                         <input type="text" id="isbn"  value={this.state.isbn} onChange={this.handleChange} />
                         <div className="red-text center">
                             {/*ISBNのエラーを表示 */}
@@ -200,29 +209,29 @@ class EditBook extends Component {
                 {/*本の情報登録用のフォーム */}
                 <form onSubmit={this.handleEditSubmit} className="white createBookForm">
                     <h5 className="red-text text-accent-1">読書本の修正</h5>
-                    <div className="input-field">
-                        <label htmlFor="title">本の名前</label>
-                        <input type="text" id="title" value={this.state.title} onChange={this.handleChange} />
+                    <div className="input-field" >
+                        <label htmlFor="title" className={this.state.title?'active':''}>本の名前</label>
+                        <input type="text" id="title"  value={this.state.title} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="author">著者</label>
-                        <input type="text" id="author" value={this.state.author} onChange={this.handleChange} />
+                        <label htmlFor="author" className={this.state.author?'active':''} >著者</label>
+                        <input type="text" id="author"  value={this.state.author} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="url">商品のURL</label>
-                        <input type="url" id="url" value={this.state.url} onChange={this.handleChange} />
+                        <label htmlFor="url" className={this.state.url?'active':''}>商品のURL</label>
+                        <input type="url" id="url"  value={this.state.url} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="imgUrl">イメージのURL</label>
-                        <input type="url" id="imgUrl" value={this.state.imgUrl} onChange={this.handleChange} />
+                        <label htmlFor="imgUrl" className={this.state.imgUrl?'active':''}>イメージのURL</label>
+                        <input type="url" id="imgUrl"  value={this.state.imgUrl} onChange={this.handleChange} />
                     </div>
                     <h5 className="red-text text-accent-1">本の評価</h5>
                     <div className="input-field">
-                        <label htmlFor="content">感想・コメント</label>
+                        <label htmlFor="content" className={this.state.content?'active':''}>感想・コメント</label>
                         <textarea id="content" className="materialize-textarea"  value={this.state.content} onChange={this.handleChange}></textarea>
                     </div>
                     <div>
-                        <Select isMulti className='tagarea_create'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
+                        <Select isMulti className='tagarea_create' defaultValue={this.state.default_tag} options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />
                         <div className='star'>
                         <p className='startext red-text text-accent-1'>評価</p>
                         <ReactStarsRating  onChange={this.handleChangeStar}  isEdit={true} value={this.state.star} />

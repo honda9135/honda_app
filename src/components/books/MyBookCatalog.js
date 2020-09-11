@@ -54,6 +54,7 @@ class BookCatalog extends Component {
                 url:'https://unsplash.com/s/photos/book',
                 tag:['その他'],
                 star:5,
+                user:'tester',
                 createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
                 init:true
             }]

@@ -4,12 +4,34 @@ import ReactStarsRating from 'react-awesome-stars-rating';
 import M from "materialize-css";
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
+import firebase from '../../config/fbConfig'
 
 class BookSummary extends Component {
     
+    constructor(props){
+        super(props)
+        this.state = {
+            user_name:null
+        }
+        this.getUser = this.getUser.bind(this)
+    }
+
     componentDidMount() {
         //collasibleを使用するためMeterializeを初期化
         M.AutoInit()
+    }
+
+    getUser(){
+        var db = firebase.firestore()
+        db.collection('users').doc(this.props.book.user).get().then(
+                snapshot => {
+                    var data = snapshot.data()
+                    this.setState({
+                        user_name:data.firstName +'・'+ data.lastName
+                    })
+                }
+            )
+        return(null)
     }
 
     render(){
@@ -17,7 +39,10 @@ class BookSummary extends Component {
         //custumClassはCompornentによってクラスを変更し、
         //表示を少し変えるため。
         const {book,custumClass} = this.props;
-
+        if(this.props.auth.uid!==book.user&&book.user!=='tester'){
+            console.log(this.props.book.user)
+            this.getUser()
+        }
         console.log(book,'book')
         
         return (
@@ -41,15 +66,39 @@ class BookSummary extends Component {
                                             <p className="grey-text">読了日:{moment(book.createdAt.toDate()).calendar()}</p>
                                             <a href={book.url} rel="noopener noreferrer" target="_blank">商品ページへGo(amazon)</a>
                                             {
-                                                this.props.auth.uid===book.user
+                                                book.user==='tester'
                                                 ?
-                                                    <NavLink to={'/editbook/'+book.id} className="green-text right">
-                                                        <i className="material-icons">edit</i>
-                                                    </NavLink>
+                                                    <p>
+                                                        投稿者：tester
+                                                    </p>
                                                 :
                                                 null
                                             }
-
+                                            {
+                                                book.user!=='tester' && this.state.user_name===null
+                                                ?
+                                                    <p>
+                                                        投稿者：私
+                                                        <NavLink to={'/editbook/'+book.id} className="green-text right">
+                                                        <i className="material-icons">edit</i>
+                                                        </NavLink>
+                                                    </p>
+                                                :
+                                                null
+                                            }
+                                            {
+                                                book.user!=='tester' &&this.state.user_name!==null
+                                                ?
+                                                <p>
+                                                    投稿者：{this.state.user_name}
+                                                    <NavLink to={'/follow/'+book.user} className="green-text right">
+                                                        <i className="material-icons">face</i>
+                                                    </NavLink>
+                                                
+                                                </p>
+                                                :
+                                                null
+                                            }
                                         </div>    
                                     </div>
                                 </div>

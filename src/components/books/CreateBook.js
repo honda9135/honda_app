@@ -153,7 +153,7 @@ class CreateBook extends Component {
                 <form onSubmit={this.handleSubmitIsbn} className="white createBookForm">
                     <h5 className="red-text text-accent-1"><a href='https://blog.qbist.co.jp/?p=3071' rel="noopener noreferrer" target="_blank">ISBN</a>での検索</h5>
                     <div className="input-field">
-                        <label htmlFor="isbn">ISBNの入力(例978-4-87311-565-8)</label>
+                        <label htmlFor="isbn" >ISBNの入力(例978-4-87311-565-8)</label>
                         <input type="text" id="isbn"  onChange={this.handleChange} />
                         <div className="red-text center">
                             {/*ISBNのエラーを表示 */}
@@ -170,24 +170,24 @@ class CreateBook extends Component {
                 <form onSubmit={this.handleSubmit} className="white createBookForm">
                     <h5 className="red-text text-accent-1">読書本の手動登録</h5>
                     <div className="input-field">
-                        <label htmlFor="title">本の名前</label>
+                        <label htmlFor="title" className={this.state.title?'active':''} >本の名前</label>
                         <input type="text" id="title" value={this.state.title} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="author">著者</label>
+                        <label htmlFor="author" className={this.state.author?'active':''}>著者</label>
                         <input type="text" id="author" value={this.state.author} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="url">商品のURL</label>
+                        <label htmlFor="url" className={this.state.url?'active':''}>商品のURL</label>
                         <input type="url" id="url" value={this.state.url} onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="imgUrl">イメージのURL</label>
+                        <label htmlFor="imgUrl" className={this.state.imgUrl?'active':''}>イメージのURL</label>
                         <input type="url" id="imgUrl" value={this.state.imgUrl} onChange={this.handleChange} />
                     </div>
                     <h5 className="red-text text-accent-1">本の評価</h5>
                     <div className="input-field">
-                        <label htmlFor="content">感想・コメント</label>
+                        <label htmlFor="content" className={this.state.content?'active':''} >感想・コメント</label>
                         <textarea id="content" className="materialize-textarea"  value={this.state.content} onChange={this.handleChange}></textarea>
                     </div>
                     <div>
