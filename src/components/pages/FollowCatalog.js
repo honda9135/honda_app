@@ -24,8 +24,7 @@ class FollowCatalog extends Component {
         e.preventDefault()
         
         this.props.deleFollow(this.props.auth,this.props.profile,this.props.follower.id)
-        
-        
+        this.props.history.push('/')
     }
     render() {
         const { auth,follower } = this.props;
