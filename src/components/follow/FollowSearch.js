@@ -55,7 +55,7 @@ class FollowSearch extends Component {
     
     handleClear = (e) => {
         e.preventDefault()
-        console.log(this.props.profile)
+        
         this.setState({
             uid:this.state.uid,
             user:{},

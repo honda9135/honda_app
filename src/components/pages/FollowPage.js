@@ -8,7 +8,7 @@ import Loading from '../../config/Loading'
 class FollowPage extends Component {
     render(){
          if(this.props.users&&this.props.users.length!==0){
-             console.log(this.props.users[0],'user')
+             
              return (<FollowCatalog follower={this.props.users[0]}　history={this.props.history} />)
          }
          else{             
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
  export default compose(
      connect(mapStateToProps),
      firestoreConnect( (props)  =>{
-         console.log(props.match.params.uid,'props')
+         
          var firebaseQueries = [{
                  collection: 'users',
                  doc:props.match.params.uid,

@@ -17,7 +17,7 @@ export default class LibraryRegModal extends Component{
         M.AutoInit()
     }
     handleChangeSelect = (e) =>{
-        console.log(e.target.value)
+        
         //タグの変化を保存する
         this.setState({
             area:e.target.value
@@ -25,17 +25,17 @@ export default class LibraryRegModal extends Component{
     }
     handleLibSearch = (e) => {
         e.preventDefault()
-        console.log(this.state.area);
+        
         const libSearchUrl = 'https://api.calil.jp/library?appkey=beb8cae3fc718d98f48917a6928a8373&pref='+this.state.area;
-        console.log(libSearchUrl)
+        
         //openDbに本の情報を問い合わせる。
         //とってきた情報をstateに保存
         fetch(libSearchUrl,{headers:{origin: 'home-90900.web.app'}})
             .then(response => response.json())
             .then((data) => {
-                console.log(data)
+                
         }).catch((err) => {
-            console.log('エラー')
+            
         });
     }
     render(){

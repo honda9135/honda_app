@@ -22,10 +22,10 @@ class FollowCatalog extends Component {
 
     handleDeleSubmit(e){
         e.preventDefault()
-        console.log(this.props)
+        
         this.props.deleFollow(this.props.auth,this.props.profile,this.props.follower.id)
-        console.log(this.props.history)
-        this.props.history.push('/')
+        
+        
     }
     render() {
         const { auth,follower } = this.props;
@@ -75,7 +75,7 @@ export default compose(
     connect(mapStateToProps,mapDispatchToProps),
     firestoreConnect((props) =>{
         
-        console.log(props.follower,'follower')
+        
         //firestoreに要求するqueryを作成する
         var firebaseQueries = []
 

@@ -8,7 +8,7 @@ class MyprofileModal extends Component{
         M.AutoInit()
     }
     render(){
-        console.log(this.props.profile)
+        
         return (
             <div id="modal4" class="modal">
               <div class="modal-content red-text text-accent-1">

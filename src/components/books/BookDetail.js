@@ -40,10 +40,8 @@ class BookDetail extends Component {
         //表示を少し変えるため。
         const {book,custumClass} = this.props;
         if(this.props.auth.uid!==book.user&&book.user!=='tester'){
-            console.log(this.props.book.user)
             this.getUser()
         }
-        console.log(book,'book')
         
         return (
             <div className="row">
