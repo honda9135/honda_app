@@ -15,7 +15,7 @@ class SignedInLinks extends Component{
         return (
             <frameElement>
                 <ul className="right">
-                <li><NavLink to='/mybookcatalog' className="red-text text-accent-1">読書本一覧</NavLink></li>
+                <li><NavLink to='/mypage' className="red-text text-accent-1">読書本一覧</NavLink></li>
                 <li><a className="modal-trigger red-text text-accent-1" href="#modal2">follow</a></li>
                 <li><a className="modal-trigger red-text text-accent-1" href="#modal5">図書館登録</a></li>
                 <li><a href="#!" className="red-text text-accent-1" onClick={this.props.signOut}>Log Out</a></li>

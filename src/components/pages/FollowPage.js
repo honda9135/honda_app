@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
-import FollowBookCatalog from '../books/FollowBookCatalog'
+import FollowCatalog from './FollowCatalog'
 import Loading from '../../config/Loading'
 
-class FollowCatalogDisplay extends Component {
+class FollowPage extends Component {
     render(){
          if(this.props.users&&this.props.users.length!==0){
-             console.log(this.props.users[0])
-             return (<FollowBookCatalog follower={this.props.users[0]}　history={this.props.history} />)
+             console.log(this.props.users[0],'user')
+             return (<FollowCatalog follower={this.props.users[0]}　history={this.props.history} />)
          }
          else{             
              return (
@@ -36,4 +36,4 @@ const mapStateToProps = (state) => {
              }]
          return firebaseQueries
      })
-)(FollowCatalogDisplay);
+)(FollowPage);

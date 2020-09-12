@@ -35,12 +35,14 @@ class CreateBook extends Component {
     handleChangeSelect = (e) =>{
         //タグの変化を保存する
         const newtag = [];
-        for (let i =0;i < e.length; i++){
-            newtag.push(e[i].value);
+        if(e!==null){
+            for (let i =0;i < e.length; i++){
+                newtag.push(e[i].value);
+            }
+            this.setState({
+                tag:newtag
+            })
         }
-        this.setState({
-            tag:newtag
-        })
     }
 
     handleChangeStar = (e) =>{
@@ -67,6 +69,7 @@ class CreateBook extends Component {
         this.props.history.push('/')
     }
 
+    //リファクタ候補
     isbn13ToIsbn10(isbn13) {
         //ISBN13からISBN10へ変換を行う。
         //amazonはISBN10でしか検索できないから
@@ -170,6 +173,8 @@ class CreateBook extends Component {
                 <form onSubmit={this.handleSubmit} className="white createBookForm">
                     <h5 className="red-text text-accent-1">読書本の手動登録</h5>
                     <div className="input-field">
+                        {/* {this.state.title?'active':''}はstateが自動で入力されたさいにlabelの値をあげる。
+                            (実際にやってみれば分かる) */}
                         <label htmlFor="title" className={this.state.title?'active':''} >本の名前</label>
                         <input type="text" id="title" value={this.state.title} onChange={this.handleChange} />
                     </div>
@@ -188,7 +193,7 @@ class CreateBook extends Component {
                     <h5 className="red-text text-accent-1">本の評価</h5>
                     <div className="input-field">
                         <label htmlFor="content" className={this.state.content?'active':''} >感想・コメント</label>
-                        <textarea id="content" className="materialize-textarea"  value={this.state.content} onChange={this.handleChange}></textarea>
+                        <textarea id="content" className="materialize-textarea" value={this.state.content} onChange={this.handleChange}></textarea>
                     </div>
                     <div>
                         <Select isMulti className='tagarea_create'  options={options}  placeholder={'タグを選択してください'} onChange={this.handleChangeSelect} />

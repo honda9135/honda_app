@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
 import firebase from '../../config/fbConfig'
 
-class BookSummary extends Component {
+class BookDetail extends Component {
     
     constructor(props){
         super(props)
@@ -120,4 +120,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(BookSummary)
+export default connect(mapStateToProps, null)(BookDetail)

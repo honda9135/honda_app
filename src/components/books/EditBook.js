@@ -32,15 +32,17 @@ class EditBook extends Component {
     }
     
     componentDidMount(){
+        //最初に本の情報を取り出す
         var db = firebase.firestore()
         db.collection('books').doc(this.state.id).get().then(
             snapshot => {
                 var data = snapshot.data()
-                console.log(data)
                 if(data){
+                    //データをstateに保存
                     this.setState({...data})
                 }
                 if(this.state.tag.length!==0){
+                    //タグをvalueとlabelを持つ形に変更するstateに保存
                     this.state.tag.map((tag)=>{
                         this.setState({
                             default_tag:this.state.default_tag.push({value: tag, label: tag})   
@@ -50,7 +52,6 @@ class EditBook extends Component {
                 }
         }
         ).catch((err) =>{
-            console.log(err)
             this.setState({
                 errtext:'本を検索できませんでした'
             })
@@ -58,6 +59,7 @@ class EditBook extends Component {
     }
 
     handleChange = (e) => {
+        //フォームの入力内容を保存
         this.setState({
             [e.target.id]: e.target.value
         })
@@ -66,12 +68,19 @@ class EditBook extends Component {
     handleChangeSelect = (e) =>{
         //タグの変化を保存する
         const newtag = [];
-        for (let i =0;i < e.length; i++){
-            newtag.push(e[i].value);
+
+        //タグを選んだがキャンセルした場合があるので
+        //eがnullじゃない条件を入れる
+        //null.lengthはエラーになる
+        if((e!==null)){
+            //タグが選択された場合
+            for (let i =0;i < e.length; i++){
+                newtag.push(e[i].value);
+            }
+            this.setState({
+                tag:newtag
+            })
         }
-        this.setState({
-            tag:newtag
-        })
     }
 
     handleChangeStar = (e) =>{
@@ -96,16 +105,22 @@ class EditBook extends Component {
             id :    this.state.id   ,       //本のID
             createdAt:this.state.createdAt
         }
+        //編集のactionを実行
         this.props.editBook(bookInfo)
+        //ホームに飛ばす
         this.props.history.push('/')
     }
     
     handleDeleSubmit = (e) => {
         e.preventDefault()
+
+        //deleのaction実行
         this.props.deleBook(this.state.id)
+        //ホームに飛ばす
         this.props.history.push('/')
     }
 
+    //リファクタ候補
     isbn13ToIsbn10(isbn13) {
         //ISBN13からISBN10へ変換を行う。
         //amazonはISBN10でしか検索できないから
@@ -168,7 +183,6 @@ class EditBook extends Component {
     }
 
     render() {
-        console.log(this.state)
         const { auth } = this.props;
         //ログインしているかチェック
         if (!auth.uid) return <Redirect to='/signin' />
@@ -193,6 +207,8 @@ class EditBook extends Component {
                 <form onSubmit={this.handleSubmitIsbn} className="white createBookForm">
                     <h5 className="red-text text-accent-1"><a href='https://blog.qbist.co.jp/?p=3071' rel="noopener noreferrer" target="_blank">ISBN</a>での検索</h5>
                     <div className="input-field">
+                        {/* {this.state.isbn?'active':''}はstateが自動で入力されたさいにlabelの値をあげる。
+                            (実際にやってみれば分かる) */}
                         <label htmlFor="isbn" className={this.state.isbn?'active':''}>ISBNの入力(例978-4-87311-565-8)</label>
                         <input type="text" id="isbn"  value={this.state.isbn} onChange={this.handleChange} />
                         <div className="red-text center">

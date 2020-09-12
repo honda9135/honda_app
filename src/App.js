@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import { BrowserRouter,Switch , Route } from 'react-router-dom';
+import { connect } from 'react-redux'
+
+//ナビバー
 import Navbar from './components/layout/Navbar';
-import Dashboard from './components/dashboard/Dashboard';
+//認証
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
+//Page
+import InitialPage from './components/pages/InitialPage';
+import MyPage from './components/pages/MyPage'
+import FollowPage from './components/pages/FollowPage';
+import DashboardPage from './components/pages/DashboardPage';
+//機能
 import CreateBook from './components/books/CreateBook';
-import MyBookCatalog from './components/books/MyBookCatalog';
-import FollowCatalogDisplay from './components/follow/FollowCatalogDisplay'
-import FollowSearch from './components/follow/FollowSearch';
-import FollowModal from './components/follow/FollowModal'
-import { connect } from 'react-redux'
-import MyprofileModal from './components/profile/MyprofileModal';
 import EditBook from './components/books/EditBook';
-import LibraryRegModal from './components/books/LibraryRegModal';
-import InitialPage from './components/dashboard/InitialPage';
+
+//Modal
+//どこでも良いけど直感的に分かるようにここに配置
+import FollowModal from './components/follow/FollowModal'
+import MyprofileModal from './components/profile/MyprofileModal';
+import LibraryRegModal from './components/library/LibraryRegModal';
+
 
 
 
@@ -24,17 +32,17 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
-            <Route exact path='/' component={InitialPage} />
-            <Route exact path='/dashbord' component={Dashboard} />
+            {/* 認証 */}
             <Route exact path='/signin' component={SignIn} />
             <Route exact path='/signup' component={SignUp} />
+            {/* Page */}
+            <Route exact path='/' component={InitialPage} />
+            <Route exact path='/dashbord' component={DashboardPage} />
+            <Route path='/mypage' component={MyPage} />  
+            <Route path='/follow/:uid' component={FollowPage} />
+            {/*機能*/}
             <Route exact path='/bookcreate' component={CreateBook} />
-            <Route exact path='/mybookcatalog' component={MyBookCatalog} />
-            {/* <Route exact path='/profile' component={Profile} /> */}
-            <Route path='/follow/:uid' component={FollowCatalogDisplay} />
             <Route path='/editbook/:id' component={EditBook} />
-            {/* <Route path='/test/:uid' component={Test} />  */}
-            <Route path='/search' component={FollowSearch} />
           </Switch>
           {
             this.props.auth.uid&&this.props.profile.isLoaded

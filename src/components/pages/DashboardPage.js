@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 //import Notification from './Notification'
-import BookList from '../books/BookList'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import Loading from '../../config/Loading'
+import BookCatalog from '../books/BookCatalog'
 
 class Dashboard extends Component {
     render() {
@@ -14,7 +14,7 @@ class Dashboard extends Component {
         //もしログインしてなかったら/にリダイレクト
         if (!auth.uid) return <Redirect to='/' />
         if(this.props.profile.isLoaded&&this.props.profile.follow!==undefined&&this.props.profile.follow.length===0) {
-            return <Redirect to='/mybookcatalog' />
+            return <Redirect to='/mypage' />
         }
 
         return (
@@ -29,7 +29,7 @@ class Dashboard extends Component {
                             ?
                             <Loading />
                             :
-                            <BookList books={books} />
+                            <BookCatalog books={this.props.books} />
                         }
                 </div>
             </div>
