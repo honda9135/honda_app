@@ -12,7 +12,7 @@ class MyprofileModal extends Component{
         return (
             <div id="modal4" class="modal">
               <div class="modal-content red-text text-accent-1">
-                <h4>ようこそ 本Hisへ</h4>
+                <h4>ようこそ Book Paddyへ</h4>
                 <hr />
                 <p>{this.props.profile.firstName}・{this.props.profile.lastName}さんのIDは</p>
                 <h6 className='black-text'>

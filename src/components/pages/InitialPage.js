@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
+
 class InitialPage extends Component{
     render(){
         const { auth } = this.props;
@@ -12,7 +13,7 @@ class InitialPage extends Component{
 
         return (
             <div>
-                <h3>WellCome to 本His(β版)</h3>
+                <h3>Wellcome to Book Paddy(β版)</h3>
                 <p className='center initContent'>
                     読書は食事と同じです。
                     <br />
@@ -26,7 +27,7 @@ class InitialPage extends Component{
                 <p className='center initContent'>
                    あなたの心はどのような本達で形作られていますか
                    <br />
-                   本Hisであなたの読書(心)の記録をして、友達とシェアしましょう。
+                   あなたの読書(心)の記録をして、友達とシェアしましょう。
                    <br />
                    <NavLink to='/signup' className="btn   pink lighten-1 z-depth-0  pulse center">
                     SignUp
