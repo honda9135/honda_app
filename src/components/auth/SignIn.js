@@ -25,6 +25,8 @@ class SignIn extends Component {
         e.preventDefault()
         this.props.signIn(this.state)
     }
+
+
     render() {
         const { authError, auth } = this.props;
 
