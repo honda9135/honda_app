@@ -1,5 +1,4 @@
 //followerの登録
-//followerの検索
 export const registFollow = (reg) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
@@ -14,6 +13,7 @@ export const registFollow = (reg) => {
     }
 };
 
+//followerの削除
 export const deleFollow = (auth,profile,delUid) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();

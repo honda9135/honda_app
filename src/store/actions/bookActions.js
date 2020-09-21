@@ -1,3 +1,4 @@
+//本を登録する。
 export const createBook = (book) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
@@ -12,6 +13,7 @@ export const createBook = (book) => {
     }
 };
 
+//本をタグで検索
 export const searchBook = (tags) => {
     return (dispatch, getState) => {
         if (tags){
@@ -22,6 +24,7 @@ export const searchBook = (tags) => {
     }
 };
 
+//本の編集
 export const editBook = (book) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
@@ -39,6 +42,7 @@ export const editBook = (book) => {
     }
 };
 
+//本の削除
 export const deleBook = (id) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
