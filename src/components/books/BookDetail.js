@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import moment from 'moment'
 import ReactStarsRating from 'react-awesome-stars-rating';
 import M from "materialize-css";
@@ -7,11 +7,11 @@ import { connect } from 'react-redux'
 import firebase from '../../config/fbConfig'
 
 class BookDetail extends Component {
-    
-    constructor(props){
+
+    constructor(props) {
         super(props)
         this.state = {
-            user_name:null
+            user_name: null
         }
         this.getUser = this.getUser.bind(this)
     }
@@ -21,28 +21,28 @@ class BookDetail extends Component {
         M.AutoInit()
     }
 
-    getUser(){
+    getUser() {
         var db = firebase.firestore()
         db.collection('users').doc(this.props.book.user).get().then(
-                snapshot => {
-                    var data = snapshot.data()
-                    this.setState({
-                        user_name:data.firstName +'・'+ data.lastName
-                    })
-                }
-            )
-        return(null)
+            snapshot => {
+                var data = snapshot.data()
+                this.setState({
+                    user_name: data.firstName + '・' + data.lastName
+                })
+            }
+        )
+        return (null)
     }
 
-    render(){
+    render() {
 
         //custumClassはCompornentによってクラスを変更し、
         //表示を少し変えるため。
-        const {book,custumClass} = this.props;
-        if(this.props.auth.uid!==book.user&&book.user!=='tester'){
+        const { book, custumClass } = this.props;
+        if (this.props.auth.uid !== book.user && book.user !== 'tester') {
             this.getUser()
         }
-        
+
         return (
             <div className="row">
                 <div className="col">
@@ -60,55 +60,55 @@ class BookDetail extends Component {
                                             <hr />
                                             <p>著者: {book.author}</p>
                                             <p>タグ: {book.tag.join(",")}</p>
-                                            <ReactStarsRating   size={15} isEdit={false} value={book.star} />
+                                            <ReactStarsRating size={15} isEdit={false} value={book.star} />
                                             <p className="grey-text">読了日:{moment(book.createdAt.toDate()).calendar()}</p>
                                             <a href={book.url} rel="noopener noreferrer" target="_blank">商品ページへGo(amazon)</a>
                                             {
-                                                book.user==='tester'
-                                                ?
+                                                book.user === 'tester'
+                                                    ?
                                                     <p>
                                                         投稿者：tester
                                                     </p>
-                                                :
-                                                null
+                                                    :
+                                                    null
                                             }
                                             {
-                                                book.user!=='tester' && this.state.user_name===null
-                                                ?
+                                                book.user !== 'tester' && this.state.user_name === null
+                                                    ?
                                                     <p>
                                                         投稿者：私
-                                                        <NavLink to={'/editbook/'+book.id} className="green-text right">
-                                                        <i className="material-icons">edit</i>
+                                                        <NavLink to={'/editbook/' + book.id} className="green-text right">
+                                                            <i className="material-icons">edit</i>
                                                         </NavLink>
                                                     </p>
-                                                :
-                                                null
+                                                    :
+                                                    null
                                             }
                                             {
-                                                book.user!=='tester' &&this.state.user_name!==null
-                                                ?
-                                                <p>
-                                                    投稿者：{this.state.user_name}
-                                                    <NavLink to={'/follow/'+book.user} className="green-text right">
-                                                        <i className="material-icons">face</i>
-                                                    </NavLink>
-                                                
-                                                </p>
-                                                :
-                                                null
+                                                book.user !== 'tester' && this.state.user_name !== null
+                                                    ?
+                                                    <p>
+                                                        投稿者：{this.state.user_name}
+                                                        <NavLink to={'/follow/' + book.user} className="green-text right">
+                                                            <i className="material-icons">face</i>
+                                                        </NavLink>
+
+                                                    </p>
+                                                    :
+                                                    null
                                             }
-                                        </div>    
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="collapsible-body">
-                            <p className='book-content-title'>感想・コメント</p>
-                            {book.content}
-                        </div>
+                                <p className='book-content-title'>感想・コメント</p>
+                                {book.content}
+                            </div>
                         </li>
                     </ul>
                 </div>
-        </div>
+            </div>
         )
     }
 }

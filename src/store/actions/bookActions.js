@@ -6,7 +6,7 @@ export const createBook = (book) => {
             ...book,
             createdAt: new Date()
         }).then(() => {
-            dispatch({ type: 'CREATE_BOOK', book})
+            dispatch({ type: 'CREATE_BOOK', book })
         }).catch((err) => {
             dispatch({ type: 'CREATE_BOOK_ERROR', err })
         })
@@ -16,10 +16,10 @@ export const createBook = (book) => {
 //本をタグで検索
 export const searchBook = (tags) => {
     return (dispatch, getState) => {
-        if (tags){
-            dispatch({type:'SEARCH_BOOK',tags})
-        }else{
-            dispatch({type:'INIT_TAGS',tags})
+        if (tags) {
+            dispatch({ type: 'SEARCH_BOOK', tags })
+        } else {
+            dispatch({ type: 'INIT_TAGS', tags })
         }
     }
 };
@@ -34,7 +34,7 @@ export const editBook = (book) => {
             ...book,
         }).then(() => {
             alert('本の編集をしました')
-            dispatch({ type: 'EDIT_BOOK', book})
+            dispatch({ type: 'EDIT_BOOK', book })
         }).catch((err) => {
             alert('本の編集に失敗しました。')
             dispatch({ type: 'EDIT_BOOK_ERROR', err })
@@ -48,7 +48,7 @@ export const deleBook = (id) => {
         const firestore = getFirestore();
         firestore.collection('books').doc(id).delete().then(() => {
             alert('本を削除しました。');
-            dispatch({ type: 'DELL_BOOK'})
+            dispatch({ type: 'DELL_BOOK' })
         }).catch((err) => {
             alert('本の削除に失敗しました。')
             dispatch({ type: 'DELL_BOOK_ERROR', err })

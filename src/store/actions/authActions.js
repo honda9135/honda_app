@@ -1,6 +1,6 @@
 //ログイン処理
 export const signIn = (credentials) => {
-    return (dispatch, getState, {getFirebase}) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase();
 
         firebase.auth().signInWithEmailAndPassword(
@@ -16,7 +16,7 @@ export const signIn = (credentials) => {
 
 //ログアウト処理
 export const signOut = () => {
-    return (dispatch, getState, {getFirebase}) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase();
 
         firebase.auth().signOut().then(() => {
@@ -27,7 +27,7 @@ export const signOut = () => {
 
 //サインアップ処理
 export const signUp = (newUser) => {
-    return (dispatch, getState, {getFirebase, getFirestore}) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
 
@@ -39,7 +39,7 @@ export const signUp = (newUser) => {
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
                 initials: newUser.firstName[0] + newUser.lastName[0],
-                follow:[]
+                follow: []
             })
         }).then(() => {
             dispatch({ type: 'SIGNUP_SUCCESS' })

@@ -11,23 +11,23 @@ import BookSearch from '../books/BookSearch'
 
 
 class FollowCatalog extends Component {
-    
-    constructor(props){
+
+    constructor(props) {
         super(props);
         this.handleDeleSubmit = this.handleDeleSubmit.bind(this)
-        
+
         //検索の初期化
         this.props.searchBook([])
     }
 
-    handleDeleSubmit(e){
+    handleDeleSubmit(e) {
         e.preventDefault()
-        
-        this.props.deleFollow(this.props.auth,this.props.profile,this.props.follower.id)
+
+        this.props.deleFollow(this.props.auth, this.props.profile, this.props.follower.id)
         this.props.history.push('/')
     }
     render() {
-        const { auth,follower } = this.props;
+        const { auth, follower } = this.props;
         //もしログインしてなかったらsigninにリダイレクト
         if (!auth.uid) return <Redirect to='/signin' />
 
@@ -36,24 +36,24 @@ class FollowCatalog extends Component {
                 <p className='profilename red-text text-accent-1'>
                     {follower.firstName}・{follower.lastName}の読書本一覧
                     {/* <NavLink to='/bookcreate' className="green-text right"><i className="material-icons">add</i></NavLink> */}
-                    <a href='#!'  className='right red-text' title='followを外す' onClick={this.handleDeleSubmit}><i className="material-icons">clear</i></a>
+                    <a href='#!' className='right red-text' title='followを外す' onClick={this.handleDeleSubmit}><i className="material-icons">clear</i></a>
                     <a className="waves-effect waves-light modal-trigger green-text right" title='タグで検索する' href="#modal1"><i className="material-icons">search</i></a>
                     <BookSearch />
 
                     {/* 検索の内容を表示させる*/}
-                    { this.props.tags.length === 0 ? null :<p className='search_condition'> (検索タグ:{this.props.tags.join('or')})</p> }
+                    {this.props.tags.length === 0 ? null : <p className='search_condition'> (検索タグ:{this.props.tags.join('or')})</p>}
 
                 </p>
                 <hr />
                 <BookCatalog
-                        books={this.props.books} 
+                    books={this.props.books}
                 />
             </div>
-            )
+        )
     }
 }
 
-const mapStateToProps = (state,props) => {
+const mapStateToProps = (state, props) => {
     return {
         books: state.firestore.ordered.books,
         users: state.firestore.ordered.users,
@@ -66,35 +66,35 @@ const mapStateToProps = (state,props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         searchBook: (tags) => dispatch(searchBook(tags)),
-        deleFollow: (auth,profile,delUid) => dispatch(deleFollow(auth,profile,delUid))
+        deleFollow: (auth, profile, delUid) => dispatch(deleFollow(auth, profile, delUid))
     }
 }
 
 export default compose(
-    connect(mapStateToProps,mapDispatchToProps),
-    firestoreConnect((props) =>{
-        
-        
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect((props) => {
+
+
         //firestoreに要求するqueryを作成する
         var firebaseQueries = []
 
-        if (props.tags.length === 0){
+        if (props.tags.length === 0) {
             //条件なしの時
             firebaseQueries = [{
                 collection: 'books',
-                orderBy:['createdAt','desc'],
-                where:[
-                ['user','==',props.follower.id]
+                orderBy: ['createdAt', 'desc'],
+                where: [
+                    ['user', '==', props.follower.id]
                 ]
             }]
-        }else{
+        } else {
             //条件ありの時
             firebaseQueries = [{
                 collection: 'books',
-                orderBy:['createdAt','desc'],
-                where:[
-                    ['user','==',props.follower.id],
-                    ['tag','array-contains-any', props.tags],
+                orderBy: ['createdAt', 'desc'],
+                where: [
+                    ['user', '==', props.follower.id],
+                    ['tag', 'array-contains-any', props.tags],
                 ],
             }]
         }
