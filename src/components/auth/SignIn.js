@@ -4,7 +4,6 @@ import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 
 class SignIn extends Component {
-
     constructor(props) {
         super(props)
         this.state = {

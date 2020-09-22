@@ -99,8 +99,8 @@ export default class LibraryRegModal extends Component {
                 </div>
                 <div class="modal-footer">
                     <a href='https://calil.jp/doc/api.html' rel="noopener noreferrer" target="_blank">カーリルAPI</a>
-                を使用して図書館の登録を実装予定。(CORSの問題で未実装)
-              <button href="#!" class="modal-close btn   pink right lighten-1 z-depth-0">Agree</button>
+                    を使用して図書館の登録を実装予定。(CORSの問題で未実装)
+                    <button href="#!" class="modal-close btn   pink right lighten-1 z-depth-0">Agree</button>
                 </div>
             </div>
         )
